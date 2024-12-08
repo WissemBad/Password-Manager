@@ -1,55 +1,28 @@
-from app import ui
-from app import methods
+from tkinter import BooleanVar
+
+from utils import methods
+
 from app.user import User
+
+from database.init import Database
+from app.authentification import Authentification
+
 class App:
-    def __init__(self, database):
-        self.database = database
-
+    def __init__(self):
+        self.database = Database(self)
+        self.auth = Authentification(self)
 
         self.logged_in = False
-        self.user = None
+        self.user:(User or None) = None
 
-        self.menu = True
-        self.options = {
-            "connexion": [
-                "Se connecter",
-                "Créer un compte",
-                "Quitter l'application",
-            ]
-        }
+    def after_connect(self):
+        methods.clear_terminal()
+        methods.console("cyan", f"→ Bienvenue \033[1m{self.user.username}\033[0m\033[36m, votre gestionnaire est prêt !")
+        return
 
-
-    def ask_connexion(self):
-        if self.logged_in or self.user is not None: return False
-        while self.menu:
-            methods.clear_terminal()
-            ui.menu_connexion(self.options["connexion"])
-            try:
-                response = int(input("→ ").strip())
-                self.menu = False
-                methods.clear_terminal()
-                return self.connexion(response)
-            except ValueError: continue
-
-    def connexion(self, mode: int):
-        match mode:
-            case 0:
-                username, password = ui.menu_login()
-                user = User(username, password, self)
-                return print("Connexion réussie !") if user.login() else print("Identifiants incorrects !")
-            case 1:
-                return
-
-    # → Connexion à l'application
-    def login(self, user: object):
-        self.user = user
-        self.logged_in = True
-        return True
-
-    # → Déconnexion de l'application
-    def logout(self):
-        self.user = None
+    def quit(self):
         self.logged_in = False
-        return True
-
+        self.user = None
+        if methods.confirm("quitter le programme"): return methods.clear_terminal(), methods.console("green", "[✔] Succès : Vous avez quitté l'application.")
+        else: return self.auth.choice()
 
