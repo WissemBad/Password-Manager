@@ -1,41 +1,54 @@
+import random
 import sys
 import time
-import getpass
-from app._config import style
 
 def starting_app():
     print("")
     print("╔═════════════════════════════════════╗")
-    print("║       \033[1m\033[32mBienvenue sur UNCRACKED\033[0m       ║")
-    print("║  \033[1m[Votre Password Manager Sécurisé]\033[0m  ║")
-    print("║       \033[34m→ Réalisé par Wissem B.\033[0m       ║")
+    print("║       \033[1m\033[94mBienvenue sur UNCRACKED\033[0m       ║")
+    print("║   \033[1mVotre PasswordManager Sécurisé\033[0m    ║")
+    print("║       → Réalisé par Wissem B.       ║")
     print("╚═════════════════════════════════════╝")
 
-def loading_app(speed, wait_time):
-    for i in range(101):
-        bar = ('█' * (i // 5)).ljust(20)
-        sys.stdout.write(f"\r[Chargement] : [{bar}] {i}%")
+def loading_app(min_speed, max_speed, wait_time=1):
+    progress = 0
+    while progress < 100:
+        increment = random.randint(1, 5)
+        progress = min(progress + increment, 100)
+        bar = ('█' * (progress // 5)).ljust(20)
+        sys.stdout.write(f"\r[Chargement] : [{bar}] {progress}%")
         sys.stdout.flush()
-        time.sleep(speed)
+        time.sleep(random.uniform(min_speed, max_speed))
     time.sleep(wait_time)
 
-def menu_connexion(data):
+
+def menu_auth(pending):
     print("╔════════════════════════════════╗")
-    print("║        MENU PRINCIPAL          ║")
-    print("║  Que souhaitez-vous faire ?    ║")
+    print("║        \033[1mAUTHENTIFICATION\033[0m        ║")
+    print("║    Sélectionner une action :   ║")
     print("╚════════════════════════════════╝")
-    for i, option in enumerate(data):
-        print(f"{i}: {option}")
+    pending()
     print("══════════════════════════════════")
 
-def menu_login():
+def menu_login(pending):
     print("╔════════════════════════════════╗")
-    print("║           CONNEXION            ║")
-    print("║    Entrez vos identifiants     ║")
+    print("║           \033[1mCONNEXION\033[0m            ║")
+    print("║    Entrez vos identifiants :   ║")
     print("╚════════════════════════════════╝")
-    username, password = input("→ Nom d'utilisateur : "), input("→ Mot de passe : ")
+    response = pending()
     print("══════════════════════════════════")
-    return username, password
+    return response
+
+def menu_register(pending):
+    print("╔════════════════════════════════╗")
+    print("║       \033[1mCRÉATION DE COMPTE\033[0m       ║")
+    print("║    Entrez vos informations :   ║")
+    print("╚════════════════════════════════╝")
+    response = pending()
+    print("══════════════════════════════════")
+    return response
+
+
 
 def main_menu(data):
     print("╔════════════════════════════════╗")
@@ -60,6 +73,3 @@ def settings_menu():
     print("║           PARAMÈTRES           ║")
     print("║     Définissez vos réglages    ║")
     print("╚════════════════════════════════╝")
-
-def console(arg: str, text: str, mode: str = "colors", action = print):
-    return action(f"{style[mode][arg]}{text}{style["reset"]}")
