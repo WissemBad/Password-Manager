@@ -1,13 +1,21 @@
+import os
+import sys
 import base64
 
+from hashlib import sha256
 from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 
-from app import _config as configuration
+from utils import _config as configuration
+
+
+# → HACHAGE DES DONNÉES
+def hash(pwd: str):
+    hashed = sha256(pwd.encode('utf-8')).hexdigest()
+    return hashed
 
 # → CHIFFREMENT DES DONNÉES
-def encrypt(mode: int, pwd: str):
+def encrypt(mode: int, pwd: str, vector: str = None):
     match mode:
 
         # -- CHIFFREMENT : CESAR
@@ -33,16 +41,14 @@ def encrypt(mode: int, pwd: str):
 
         # -- CHIFFREMENT : AES
         case 1:
+            if vector is None: raise ValueError("[vector] ne doit pas être vide.")
             pwd = pad(pwd.encode('utf-8'), AES.block_size)
-            vector = get_random_bytes(16)
-
             crypt = AES.new(configuration.keys["AES"], AES.MODE_CBC, vector)
+
             encrypted = crypt.encrypt(pwd)
-
             encrypted = base64.b64encode(encrypted).decode('utf-8')
-            vector = base64.b64encode(vector).decode('utf-8')
 
-            return encrypted, vector
+            return encrypted
 
         # -- CHIFFREMENT : CUSTOM
         case 2:
@@ -77,7 +83,6 @@ def decrypt(mode: int, pwd: str, vector: str = None):
         case 1:
             if vector is None: raise ValueError("[vector] ne doit pas être vide.")
             encrypted = base64.b64decode(pwd)
-            vector = base64.b64decode(vector)
 
             crypt = AES.new(configuration.keys["AES"], AES.MODE_CBC, vector)
             decrypted = crypt.decrypt(encrypted)
@@ -89,9 +94,56 @@ def decrypt(mode: int, pwd: str, vector: str = None):
         case 2:
             return mode, pwd
 
-def compare(input, vector1, stored, vector2):
-    input = decrypt(1, input, vector1)
-    stored = decrypt(1, stored, vector2)
+# → COMPARAISON DES DONNÉES
+def compare(input, stored):
     return input == stored
 
-# VECTOR = USER ACCOUNT PASSWORD
+# Étoiles à la place de la saisie lors de l'input - By ChatGPT
+def secure_input(input: str):
+    if os.name == 'nt':  # Windows
+        import msvcrt
+        sys.stdout.write(input)
+        sys.stdout.flush()
+        password = ""
+        while True:
+            char = msvcrt.getch()
+            if char in {b'\r', b'\n'}:  # Enter key
+                break
+            elif char == b'\x08':  # Backspace
+                if len(password) > 0:
+                    password = password[:-1]
+                    sys.stdout.write('\b \b')
+                    sys.stdout.flush()
+            else:
+                password += char.decode('utf-8')
+                sys.stdout.write("*")
+                sys.stdout.flush()
+        sys.stdout.write("\n")
+        return password
+    else:  # Unix/Linux/MacOS
+        import termios
+        import tty
+        sys.stdout.write(input)
+        sys.stdout.flush()
+        password = ""
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            while True:
+                char = sys.stdin.read(1)
+                if char == '\n':  # Enter key
+                    break
+                elif char == '\x7f':  # Backspace
+                    if len(password) > 0:
+                        password = password[:-1]
+                        sys.stdout.write('\b \b')
+                        sys.stdout.flush()
+                else:
+                    password += char
+                    sys.stdout.write("*")
+                    sys.stdout.flush()
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        sys.stdout.write("\n")
+        return password

@@ -1,5 +1,13 @@
 from security import init as key
 
+# 0: JSON  -  1: SQL #
+database = 0
+
+keys = {
+    "AES": key.aes_key_load(),
+    "CESAR": key.csr_key_load()
+}
+
 characters = {
     "special": [
         "!", "@", "#", "$", "€", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+",
@@ -10,10 +18,7 @@ characters = {
     "ALPHABET": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
 }
 
-keys = {
-    "AES": key.aes_key_load(),
-    "CESAR": key.csr_key_load()
-}
+characters["allowed"] = characters["alphabet"] + characters["ALPHABET"] + characters["special"]
 
 style = {
     "reset": "\033[0m",
