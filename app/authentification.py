@@ -1,5 +1,4 @@
 import time
-from itertools import repeat
 
 from utils import ui
 from utils import methods
@@ -7,8 +6,6 @@ from utils import methods
 from security import methods as security
 
 from app.user import User
-# from app.terminal import Terminal
-# from app.password import Password
 
 class Authentification:
     def __init__(self, app):
@@ -84,6 +81,7 @@ class Authentification:
         methods.console("green", f"[✔] Succès : Déconnexion effectuée !\n→ Vos données ont été correctement enregistrées.\n")
         self.app.logged_in = False
         self.app.user = None
+        self.app.terminal = None
         methods.console("bright_yellow", f"[🛈] Info : Redirection vers le l'accueil...")
         time.sleep(3)
         return self.choice()
