@@ -132,18 +132,18 @@ def secure_input(input: str):
             tty.setraw(fd)
             while True:
                 char = sys.stdin.read(1)
-                if char == '\n':  # Enter key
+                if char == '\n' or char == '\r':  # Gérer Entrée correctement
                     break
                 elif char == '\x7f':  # Backspace
                     if len(password) > 0:
                         password = password[:-1]
-                        sys.stdout.write('\b \b')
+                        sys.stdout.write('\b \b')  # Supprime une étoile
                         sys.stdout.flush()
                 else:
                     password += char
-                    sys.stdout.write("*")
+                    sys.stdout.write("*")  # Affiche une étoile
                     sys.stdout.flush()
         finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)  # Réinitialise les paramètres
         sys.stdout.write("\n")
         return password
