@@ -50,14 +50,16 @@ def menu_register(pending):
 
 
 
-def main_menu(data):
+def menu_main(pending):
     print("╔════════════════════════════════╗")
     print("║        MENU PRINCIPAL          ║")
     print("║  Que souhaitez-vous faire ?    ║")
     print("╚════════════════════════════════╝")
-    for i, option in enumerate(data):
-        print(f"{i}: {option}")
+    pending()
     print("══════════════════════════════════")
+
+
+
 
 def mode_selection(data):
     print("╔════════════════════════════════╗")
