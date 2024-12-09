@@ -12,13 +12,15 @@ class App:
     def __init__(self):
         self.database = Database(self)
         self.auth = Authentification(self)
-        self.terminal = Terminal(self)
+        self.terminal = None
 
         self.logged_in = False
-        self.user:(User or None) = None
+        self.user = None
 
     def after_connect(self):
         methods.clear_terminal()
+        self.terminal = Terminal(self)
+
         methods.console("cyan", f"→ Bienvenue \033[1m{self.user.username}\033[0m\033[36m, votre gestionnaire est prêt !")
         ui.menu_main(ask_options)
         try:
@@ -40,6 +42,9 @@ class App:
             methods.console("bright_red", "[✘] Erreur : Vous devez entrer un chiffre.")
             time.sleep(1)
             return self.after_connect()
+
+    def get_user(self):
+        return self.user
 
     def quit(self):
         self.logged_in = False
