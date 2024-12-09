@@ -1,5 +1,6 @@
 import string
 import time
+from urllib import response
 
 from utils import methods
 from utils import ui
@@ -23,11 +24,20 @@ class Terminal:
     def command(self):
         while True:
             request = input(f"→ {self.user.username}@uncracked: ").strip().lower()
-            request = request.split(" ")
-            print(request)
+            formatted = split_command(request)
+            print(formatted)
 
     def get_commands(self):
         return ["help"]
 
     def clear(self):
         return self.main()
+
+def split_command(command):
+    response = command.split(" ")
+    try:
+        response.remove(' ')
+        response.remove('')
+        return response
+    except ValueError:
+        return response

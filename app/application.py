@@ -38,7 +38,7 @@ class App:
                     methods.console("bright_red", "[✘] Erreur : L'option sélectionnée n'existe pas.")
                     time.sleep(1)
                     return self.after_connect()
-        except ValueError:
+        except ValueError as e:
             methods.console("bright_red", "[✘] Erreur : Vous devez entrer un chiffre.")
             time.sleep(1)
             return self.after_connect()
