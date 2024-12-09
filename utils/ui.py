@@ -52,11 +52,20 @@ def menu_register(pending):
 
 def menu_main(pending):
     print("╔════════════════════════════════╗")
-    print("║        MENU PRINCIPAL          ║")
-    print("║  Que souhaitez-vous faire ?    ║")
+    print("║        \033[1mMENU PRINCIPAL\033[0m          ║")
+    print("║   Que souhaitez-vous faire ?   ║")
     print("╚════════════════════════════════╝")
     pending()
     print("══════════════════════════════════")
+
+def menu_terminal():
+    print("╔════════════════════════════════════╗")
+    print("║        \033[1mTERMINAL DE COMMANDE\033[0m        ║")
+    print("║    Entrez une ligne de commande    ║")
+    print("║                                    ║")
+    print("║   \033[3m[help] pour consulter la liste\033[0m   ║")
+    print("║      \033[3mdes commandes existantes.\033[0m     ║")
+    print("╚════════════════════════════════════╝")
 
 
 
