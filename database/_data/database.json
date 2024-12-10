@@ -19,6 +19,11 @@
             "id": 4,
             "username": "ethjuro",
             "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+        },
+        {
+            "id": 5,
+            "username": "wissem_bad",
+            "password": "0ef8d4cce128d4a8d9762561cd26efbdc1e598b180b7afdadcc19e8a84cdfc6e"
         }
     ],
     "credentials": [],

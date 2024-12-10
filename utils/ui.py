@@ -63,8 +63,8 @@ def menu_terminal():
     print("║        \033[1mTERMINAL DE COMMANDE\033[0m        ║")
     print("║    Entrez une ligne de commande    ║")
     print("║                                    ║")
-    print("║   \033[3m[help] pour consulter la liste\033[0m   ║")
-    print("║      \033[3mdes commandes existantes.\033[0m     ║")
+    print("║   \033[2m\033[3m'help' pour consulter la liste\033[0m   ║")
+    print("║      \033[2m\033[3mdes commandes existantes.\033[0m     ║")
     print("╚════════════════════════════════════╝")
 
 
