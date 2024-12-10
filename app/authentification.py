@@ -87,12 +87,12 @@ class Authentification:
         return self.choice()
 
 def ask_login():
-    username = input("→ Nom d'utilisateur : ").strip().lower()
+    username = input("→ Nom d'utilisateur : ").strip().lower().replace(" ", "_")
     password = security.secure_input("→ Mot de passe : ").strip()
     return username, password
 
 def ask_register():
-    username = input("→ Nom d'utilisateur : ").strip().lower()
+    username = input("→ Nom d'utilisateur : ").strip().lower().replace(" ", "_")
     print("----------------------------------")
     password = security.secure_input("→ Mot de passe : ")
     confirm = security.secure_input("→ Confirmation : ")
