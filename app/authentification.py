@@ -82,7 +82,7 @@ class Authentification:
         self.app.logged_in = False
         self.app.user = None
         self.app.terminal = None
-        methods.console("bright_yellow", f"[🛈] Info : Redirection vers le l'accueil...")
+        methods.console("bright_yellow", f"[🛈] Info : Redirection vers l'accueil...")
         time.sleep(3)
         return self.choice()
 
