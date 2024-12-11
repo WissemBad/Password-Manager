@@ -17,7 +17,7 @@ def main():
     methods.pending_load()
 
     # Lancement du chargement de l'application
-    ui.loading_app(0.005, 0.1,0.2)
+    # ui.loading_app(0.005, 0.1,0.2)
 
     # Nettoyer le terminal utilisateur
     methods.clear_terminal()
