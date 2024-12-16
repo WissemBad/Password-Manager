@@ -3,6 +3,7 @@ from app.application import App
 
 from utils import methods
 from utils import ui
+from utils import _test
 
 Application = App()
 
@@ -26,4 +27,4 @@ def main():
     Application.auth.choice()
 
 if __name__ == "__main__":
-    main()
+    _test.main()
