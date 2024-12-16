@@ -19,7 +19,7 @@ class User(object):
     # → Récupérer l'identifiant de l'utilisateur
     def get_id(self):
         return self.database.user.get_by_name(self.username)["id"] if self.exists \
-            else methods.auto_increment(self.database.utilisateur)
+            else methods.auto_increment(self.database["utilisateur"])
 
     # → Ajouter un utilisateur à la base de données
     def register(self):
