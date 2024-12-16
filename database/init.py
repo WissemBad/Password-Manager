@@ -3,6 +3,8 @@ import json
 
 from utils import _config as configuration
 
+from database import user, credentials
+
 match configuration.database:
 
     case 0: # DATABASE MODE : JSON
@@ -13,8 +15,8 @@ match configuration.database:
                 self.template = configuration.template["database"]
                 self.complete = self.load()
 
-                self.utilisateur = self.complete["utilisateur"]
-                self.credentials = self.complete["credentials"]
+                self.user = user.User(self)
+                self.credentials = credentials.Credentials(self)
                 self.label = self.complete["label"]
 
             # Créer la base de données
