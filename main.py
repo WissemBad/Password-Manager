@@ -3,6 +3,7 @@ from app.application import App
 
 from utils import methods
 from utils import ui
+from utils import _test
 
 Application = App()
 
@@ -17,7 +18,7 @@ def main():
     methods.pending_load()
 
     # Lancement du chargement de l'application
-    ui.loading_app(0.005, 0.1,0.2)
+    # ui.loading_app(0.005, 0.1,0.2)
 
     # Nettoyer le terminal utilisateur
     methods.clear_terminal()
@@ -26,4 +27,4 @@ def main():
     Application.auth.choice()
 
 if __name__ == "__main__":
-    main()
+    _test.main()

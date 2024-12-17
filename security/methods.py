@@ -50,8 +50,12 @@ def encrypt(mode: int, pwd: str, vector: str = None):
 
             return encrypted
 
-        # -- CHIFFREMENT : CUSTOM
+        # -- CHIFFREMENT : RSA
         case 2:
+            return pwd
+
+        # -- CHIFFREMENT : CUSTOM
+        case 3:
             return pwd
 
 # → DÉCHIFFREMENT DES DONNÉES
@@ -90,8 +94,12 @@ def decrypt(mode: int, pwd: str, vector: str = None):
             decrypted = unpad(decrypted, AES.block_size).decode('utf-8')
             return decrypted
 
-        # -- DECRYPTAGE : CUSTOM
+        # -- DECRYPTAGE : RSA
         case 2:
+            return mode, pwd
+
+        # -- DECRYPTAGE : CUSTOM
+        case 3:
             return mode, pwd
 
 # → COMPARAISON DES DONNÉES
@@ -132,18 +140,18 @@ def secure_input(input: str):
             tty.setraw(fd)
             while True:
                 char = sys.stdin.read(1)
-                if char == '\n':  # Enter key
+                if char == '\n' or char == '\r':  # Gérer Entrée correctement
                     break
                 elif char == '\x7f':  # Backspace
                     if len(password) > 0:
                         password = password[:-1]
-                        sys.stdout.write('\b \b')
+                        sys.stdout.write('\b \b')  # Supprime une étoile
                         sys.stdout.flush()
                 else:
                     password += char
-                    sys.stdout.write("*")
+                    sys.stdout.write("*")  # Affiche une étoile
                     sys.stdout.flush()
         finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)  # Réinitialise les paramètres
         sys.stdout.write("\n")
         return password
