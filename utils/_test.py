@@ -1,61 +1,18 @@
-import math
-from utils.methods import generate_prime
+import base64
+from app.application import App
 
-def generate_keys(key_size):
-    bits = key_size // 2
+Application = App()
 
-    p = generate_prime(bits)
-    q = generate_prime(bits)
+public, private = Application.security.generate_rsa_keys(2048)
+message = "WIssemLPlusBeau"
+print("Message: ", message)
+print("Public key: ", public)
+encrypted = Application.security.encrypt.RSA(message, public)
 
-    while p == q: q = generate_prime(bits)
+private_key = [
+                base64.b64encode(Application.security.manager.double_decrypt(base64.b64decode(private[0].encode("utf-8")))),
+                base64.b64encode(Application.security.manager.double_decrypt(base64.b64decode(private[1].encode("utf-8"))))
+               ]
 
-    n = p * q
-    phi = (p - 1) * (q - 1)
+print(Application.security.decrypt.RSA(encrypted, private_key))
 
-    e = 65537 if math.gcd(65537, phi) == 1 else 3
-    while math.gcd(e, phi) != 1:
-        e += 2
-
-    d = pow(e, -1, phi)
-    return (e, n), (d, n)
-
-def encrypt(message, public_key):
-    e, n = public_key
-    # Convertir le message en entier
-    m = int.from_bytes(message.encode('utf-8'), byteorder='big')
-    if m >= n:
-        raise ValueError("Le message est trop long pour la clé publique.")
-    # Calculer le message chiffré
-    c = pow(m, e, n)
-    return c
-
-def decrypt(cipher, private_key):
-    d, n = private_key
-    # Calculer le message en clair
-    m = pow(cipher, d, n)
-    # Convertir l'entier en texte
-    message = m.to_bytes((m.bit_length() + 7) // 8, byteorder='big').decode('utf-8')
-    return message
-
-def main():
-    # Taille de clé (en bits)
-    key_size = 512
-
-    # Générer les clés publique et privée
-    public_key, private_key = generate_keys(key_size)
-
-    # Message à chiffrer
-    message = "CacaProutPipi"
-    print("Message original :", message)
-
-    # Chiffrement
-    cipher = encrypt(message, public_key)
-    print("Message chiffré :", cipher)
-
-    # Déchiffrement
-    decrypted_message = decrypt(cipher, private_key)
-    print("Message déchiffré :", decrypted_message)
-
-# Programme principal
-if __name__ == "__main__":
-    main()
