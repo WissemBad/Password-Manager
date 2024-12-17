@@ -10,33 +10,33 @@ class User(object):
         self.password = security.hash(password)
 
         self.exists = self.get_exists()
-        self.id = self.get_id()
+        self.id:int = self.get_id()
 
     # → Récupérer le statut de l'utilisateur
     def get_exists(self):
-        return self.database.get("utilisateur", "username", self.username) is not None
+        return self.database.user.exists(self.username)
 
     # → Récupérer l'identifiant de l'utilisateur
     def get_id(self):
-        return self.database.find_id("utilisateur", "username", self.username) if self.exists \
-            else methods.auto_increment(self.database.utilisateur)
+        return self.database.user.get_by_name(self.username)["id"] if self.exists \
+            else methods.auto_increment(self.database["utilisateur"])
 
     # → Ajouter un utilisateur à la base de données
     def register(self):
         if self.exists: return False
         user = {"id": self.id, "username": self.username, "password": self.password}
-        return self.database.add("utilisateur", user)
+        return self.database.user.create(user)
 
     # → Supprimer un utilisateur de la base de données
     def delete(self):
         if not self.exists: return False
         if not methods.confirm("supprimer définitivement votre compte"): return False
-        return self.database.delete("utilisateur", "id", self.id)
+        return self.database.user.delete(self.id)
 
     # → Connexion à l'application
     def login(self):
         if not self.exists: return False
-        head = self.database.get("utilisateur", "username", self.username)
+        head = self.database.user.get_by_name(self.username)
 
         if not head["id"] == self.id: return False
         return security.compare(head["password"], self.password)

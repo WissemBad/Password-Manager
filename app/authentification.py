@@ -1,5 +1,4 @@
 import time
-from itertools import repeat
 
 from utils import ui
 from utils import methods
@@ -7,8 +6,6 @@ from utils import methods
 from security import methods as security
 
 from app.user import User
-# from app.terminal import Terminal
-# from app.password import Password
 
 class Authentification:
     def __init__(self, app):
@@ -30,11 +27,11 @@ class Authentification:
                     return self.app.quit()
                 case _:
                     methods.console("bright_red", "[✘] Erreur : L'option sélectionnée n'existe pas.")
-                    time.sleep(2)
+                    time.sleep(1.5)
                     return self.choice()
         except ValueError:
             methods.console("bright_red", "[✘] Erreur : Vous devez entrer un chiffre.")
-            time.sleep(2)
+            time.sleep(1.5)
             return self.choice()
 
     # → Connexion à l'application
@@ -46,12 +43,12 @@ class Authentification:
             self.app.logged_in = True
             self.app.user = user
             methods.console("green", "[✔] Succès :  Connexion établie !")
-            methods.console("bright_yellow", f"[🛈] Info : Redirection vers le menu principal dans 3s...")
-            time.sleep(3)
+            methods.console("bright_yellow", f"[🛈] Info : Redirection vers le menu principal...")
+            time.sleep(1.8)
             return self.app.after_connect()
         else:
             methods.console("red", "[✘] Erreur : Identifiants incorrects ou inexistants !")
-            time.sleep(2)
+            time.sleep(1.5)
             return self.choice()
 
     # → Enregistrement à l'application
@@ -61,10 +58,10 @@ class Authentification:
 
         if password == "" or username == "":
             methods.console("bright_red", "[✘] Erreur : Les champs ne doivent pas être vides.")
-            return time.sleep(2), self.register(repeat) if not repeat else self.choice()
+            return time.sleep(1.5), self.register(repeat) if not repeat else self.choice()
         if not confirm:
             methods.console("bright_red", "[✘] Erreur : Les mots de passe ne correspondent pas.")
-            return time.sleep(2), self.register(repeat) if not repeat else self.choice()
+            return time.sleep(1.5), self.register(repeat) if not repeat else self.choice()
 
         user = User(username, password, self)
         if user.register():
@@ -72,23 +69,30 @@ class Authentification:
             self.app.logged_in = True
             self.app.user = user
             methods.console("bright_yellow", f"[🛈] Info : Redirection vers le menu principal dans 3s...")
-            time.sleep(3)
+            time.sleep(1.8)
             return self.app.after_connect()
         else:
             methods.console("red", f"[✘] Erreur : Le nom d'utilisateur est déjà utilisé.")
-            return time.sleep(2), self.register(repeat) if not repeat else self.choice()
+            return time.sleep(1.5), self.register(repeat) if not repeat else self.choice()
 
     # → Déconnexion de l'application
     def logout(self):
-        return True
+        methods.clear_terminal()
+        methods.console("green", f"[✔] Succès : Déconnexion effectuée !\n→ Vos données ont été correctement enregistrées.\n")
+        self.app.logged_in = False
+        self.app.user = None
+        self.app.terminal = None
+        methods.console("bright_yellow", f"[🛈] Info : Redirection vers l'accueil...")
+        time.sleep(3)
+        return self.choice()
 
 def ask_login():
-    username = input("→ Nom d'utilisateur : ").strip().lower()
+    username = input("→ Nom d'utilisateur : ").strip().lower().replace(" ", "_")
     password = security.secure_input("→ Mot de passe : ").strip()
     return username, password
 
 def ask_register():
-    username = input("→ Nom d'utilisateur : ").strip().lower()
+    username = input("→ Nom d'utilisateur : ").strip().lower().replace(" ", "_")
     print("----------------------------------")
     password = security.secure_input("→ Mot de passe : ")
     confirm = security.secure_input("→ Confirmation : ")
