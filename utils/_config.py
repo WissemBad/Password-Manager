@@ -1,11 +1,9 @@
-from security import init as key
-
 # 0: JSON  -  1: SQL #
 database = 0
 
 keys = {
-    "AES": key.aes_key_load(),
-    "CESAR": key.csr_key_load(),
+    "AES": "caca",
+    "CESAR": "caca"
 }
 
 characters = {

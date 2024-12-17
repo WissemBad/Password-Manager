@@ -1,11 +1,11 @@
-from database.init import Database
 from app.application import App
+from dotenv import load_dotenv
 
 from utils import methods
 from utils import ui
-from utils import _test
 
 Application = App()
+load_dotenv()
 
 def main():
     # Nettoyer le terminal utilisateur
@@ -27,4 +27,4 @@ def main():
     Application.auth.choice()
 
 if __name__ == "__main__":
-    _test.main()
+    main()

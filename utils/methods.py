@@ -1,4 +1,5 @@
 import os
+import sys
 import random
 import requests
 
@@ -28,6 +29,57 @@ def confirm(confirmation:str) -> bool:
         confirm = console("yellow", f"[🛈] Voulez-vous vraiment {confirmation} ? [Oui/Non]\n→ ", "colors", input)
         if confirm.lower().strip() in ["oui", "non"]: return True if confirm.lower() == "oui" else False
 
+
+# Étoiles à la place de la saisie lors de l'input - By ChatGPT
+def secure_input(input: str):
+    if os.name == 'nt':  # Windows
+        import msvcrt
+        sys.stdout.write(input)
+        sys.stdout.flush()
+        password = ""
+        while True:
+            char = msvcrt.getch()
+            if char in {b'\r', b'\n'}:  # Enter key
+                break
+            elif char == b'\x08':  # Backspace
+                if len(password) > 0:
+                    password = password[:-1]
+                    sys.stdout.write('\b \b')
+                    sys.stdout.flush()
+            else:
+                password += char.decode('utf-8')
+                sys.stdout.write("*")
+                sys.stdout.flush()
+        sys.stdout.write("\n")
+        return password
+    else:  # Unix/Linux/MacOS
+        import termios
+        import tty
+        sys.stdout.write(input)
+        sys.stdout.flush()
+        password = ""
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            while True:
+                char = sys.stdin.read(1)
+                if char == '\n' or char == '\r':  # Gérer Entrée correctement
+                    break
+                elif char == '\x7f':  # Backspace
+                    if len(password) > 0:
+                        password = password[:-1]
+                        sys.stdout.write('\b \b')  # Supprime une étoile
+                        sys.stdout.flush()
+                else:
+                    password += char
+                    sys.stdout.write("*")  # Affiche une étoile
+                    sys.stdout.flush()
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)  # Réinitialise les paramètres
+        sys.stdout.write("\n")
+        return password
+
 # Générer un mot aléatoire
 def get_random_word(size):
     response = requests.get(f"https://trouve-mot.fr/api/size/{size}")
@@ -40,34 +92,35 @@ def get_random_caps(word):
         response += char.upper() if random.choice([True, False]) else char.lower()
     return response
 
-# Fonction pour effectuer le test de primalité de Miller-Rabin
+# Test de nombre premier de Miller-Rabin
 def is_prime(n, k=5):
-    if n == 2 or n == 3: return True
-    if n == 1 or n % 2 == 0: return False
+    if n == 2 or n == 3: return True  # 2 et 3 sont premiers
+    if n == 1 or n % 2 == 0: return False  # 1 et les nombres pairs sont non premiers
 
     s, d = 0, n - 1
     while d % 2 == 0:
         s += 1
-        d //= 2
+        d //= 2  # décomposer n-1 en s * 2^d
 
     for _ in range(k):
         a = random.randrange(2, n - 1)
-        x = pow(a, d, n)
+        x = pow(a, d, n)  # calcul a^d mod n
         if x == 1 or x == n - 1:
             continue
         for _ in range(s - 1):
-            x = pow(x, 2, n)
+            x = pow(x, 2, n)  # calcul x^2 mod n
             if x == n - 1:
                 break
         else:
-            return False
+            return False  # n n'est pas premier
     return True
 
+# Générer un nombre premier
 def generate_prime(bits):
     while True:
-        candidate = random.getrandbits(bits)
-        candidate |= (1 << (bits - 1)) | 1
-        if is_prime(candidate): return candidate
+        num = random.getrandbits(bits)
+        if num % 2 == 0: num += 1
+        if is_prime(num): return num
 
 
 

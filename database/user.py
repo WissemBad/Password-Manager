@@ -16,4 +16,9 @@ class User:
         return request is not None
 
     def create(self, user):
-        return self.database.add(user)
+        return self.database.add("utilisateur", user)
+
+    def get_rsa_keys(self, id:int):
+        request = self.database.get("utilisateur", "id", id)
+        return request["rsa_public_key"], request["rsa_private_key"]
+
