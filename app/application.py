@@ -3,14 +3,18 @@ import time
 from utils import methods
 from utils import ui
 
+from database.init import Database
+from security.main import Security
+
 from app.user import User
 from app.terminal import Terminal
-from database.init import Database
 from app.authentification import Authentification
 
 class App:
     def __init__(self):
         self.database = Database(self)
+        self.security = Security(self)
+
         self.auth = Authentification(self)
         self.terminal = None
 

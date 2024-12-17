@@ -3,8 +3,6 @@ import time
 from utils import ui
 from utils import methods
 
-from security import methods as security
-
 from app.user import User
 
 class Authentification:
@@ -29,8 +27,9 @@ class Authentification:
                     methods.console("bright_red", "[✘] Erreur : L'option sélectionnée n'existe pas.")
                     time.sleep(1.5)
                     return self.choice()
-        except ValueError:
+        except Exception as error:
             methods.console("bright_red", "[✘] Erreur : Vous devez entrer un chiffre.")
+            print(error)
             time.sleep(1.5)
             return self.choice()
 
@@ -38,7 +37,7 @@ class Authentification:
     def login(self):
         methods.clear_terminal()
         username, password = ui.menu_login(ask_login)
-        user = User(username, password, self)
+        user = User(username, password, self.app)
         if user.login():
             self.app.logged_in = True
             self.app.user = user
@@ -63,7 +62,7 @@ class Authentification:
             methods.console("bright_red", "[✘] Erreur : Les mots de passe ne correspondent pas.")
             return time.sleep(1.5), self.register(repeat) if not repeat else self.choice()
 
-        user = User(username, password, self)
+        user = User(username, password, self.app)
         if user.register():
             methods.console("green", f"[✔] Succès : Votre compte [{username}] a été créé !")
             self.app.logged_in = True
@@ -88,14 +87,14 @@ class Authentification:
 
 def ask_login():
     username = input("→ Nom d'utilisateur : ").strip().lower().replace(" ", "_")
-    password = security.secure_input("→ Mot de passe : ").strip()
+    password = methods.secure_input("→ Mot de passe : ").strip()
     return username, password
 
 def ask_register():
     username = input("→ Nom d'utilisateur : ").strip().lower().replace(" ", "_")
     print("----------------------------------")
-    password = security.secure_input("→ Mot de passe : ")
-    confirm = security.secure_input("→ Confirmation : ")
+    password = methods.secure_input("→ Mot de passe : ")
+    confirm = methods.secure_input("→ Confirmation : ")
     return username, password, password == confirm
 
 def ask_options():

@@ -1,5 +1,5 @@
+import base64
 from utils import methods
-from security import methods as security
 
 class User(object):
     def __init__(self, username: str, password: str, app):
@@ -7,10 +7,13 @@ class User(object):
         self.database = app.database
 
         self.username = username
-        self.password = security.hash(password)
+        self.password = self.app.security.hasher.hash(password)
+        self.aes_encryption_key = self.app.security.get_aes_vector(password)
 
         self.exists = self.get_exists()
         self.id:int = self.get_id()
+
+        if self.exists: self.rsa_public_key, self.rsa_private_key = self.database.user.get_rsa_keys(self.id)
 
     # → Récupérer le statut de l'utilisateur
     def get_exists(self):
@@ -19,12 +22,13 @@ class User(object):
     # → Récupérer l'identifiant de l'utilisateur
     def get_id(self):
         return self.database.user.get_by_name(self.username)["id"] if self.exists \
-            else methods.auto_increment(self.database["utilisateur"])
+            else methods.auto_increment(self.database.complete["utilisateur"])
 
     # → Ajouter un utilisateur à la base de données
     def register(self):
         if self.exists: return False
-        user = {"id": self.id, "username": self.username, "password": self.password}
+        rsa_public_key, rsa_private_key = self.app.security.generate_rsa_keys(2048)
+        user = {"id": self.id, "username": self.username, "password": self.password, "rsa_public_key": rsa_public_key, "rsa_private_key": rsa_private_key}
         return self.database.user.create(user)
 
     # → Supprimer un utilisateur de la base de données
@@ -39,7 +43,7 @@ class User(object):
         head = self.database.user.get_by_name(self.username)
 
         if not head["id"] == self.id: return False
-        return security.compare(head["password"], self.password)
+        return self.app.security.hasher.verify(head["password"], self.password)
 
     # → Déconnexion de l'application
     def logout(self):
