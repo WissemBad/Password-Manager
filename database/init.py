@@ -11,6 +11,7 @@ match configuration.database:
         class Database:
             def __init__(self, app):
                 self.app = app
+                self.user = self.app.user
 
                 self.template = configuration.template["database"]
                 self.complete = self.load()

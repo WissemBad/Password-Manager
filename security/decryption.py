@@ -8,7 +8,7 @@ class Decryption:
     def __init__(self, instance):
         self.security = instance
 
-    def cesar(self, pwd: str):
+    def CESAR(self, pwd: str):
         response = ""
         for char in pwd:
             if char in configuration.characters["alphabet"]:
@@ -33,28 +33,19 @@ class Decryption:
         cipher = AES.new(self.security.manager.aes_load_key(), AES.MODE_CBC, vector)
 
         decrypted = unpad(cipher.decrypt(encrypted), AES.block_size)
-        decrypted = decrypted.decode('utf-8').removesuffix(salt.hex())
+        decrypted = decrypted.decode('utf-8').removesuffix(salt.decode('utf-8'))
         return decrypted
 
-    def RSA(self, encrypted: int, private_key):
-        # Déchiffrer chaque partie de la clé privée
+    @staticmethod
+    def RSA(encrypted: int, private_key):
         d_bytes, n_bytes = base64.b64decode(private_key[0]), base64.b64decode(private_key[1])
         d, n = int.from_bytes(d_bytes, byteorder='big'), int.from_bytes(n_bytes, byteorder='big')
 
-        # Appliquer le déchiffrement RSA : crypt^d mod n
         decrypted = pow(encrypted, d, n)
-
-        # Convertir le résultat en bytes, puis en chaîne UTF-8
         decrypted_bytes = decrypted.to_bytes((decrypted.bit_length() + 7) // 8, byteorder='big')
 
-        try:
-            # Essayer de décoder les bytes en UTF-8
-            decrypted_message = decrypted_bytes.decode('utf-8')
-        except UnicodeDecodeError:
-            # Si l'UTF-8 échoue, afficher les bytes bruts
-            decrypted_message = f"Erreur de décodage UTF-8. Bytes: {decrypted_bytes}"
-
-        # Retourner le message décrypté
+        try: decrypted_message = decrypted_bytes.decode('utf-8')
+        except UnicodeDecodeError: return False
         return decrypted_message
 
     def custom(self):
