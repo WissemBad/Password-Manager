@@ -1,35 +1,41 @@
-class Credentials:
+from app.credentials import Credentials
+
+
+class DataCredentials:
     def __init__(self, database):
         self.database = database
-        self.user = self.database.user
+        self.user = self.database.app.user
+
         self.data = self.database.complete["credentials"]
+        self.user_data = self.get_user_credentials(self.user.id)
 
-    def get_by_id(self, id: int):
-        request = self.database.get("credentials", "id", id)
-        return request
+    def get_user_credentials(self, user_id: int):
+        """→ Récupérer les données d'un utilisateur."""
+        response = []
+        for element in self.data:
+            if element["user_id"] == user_id: response.append(element)
+        return response
 
-    def get_by_name(self, name):
-        request = self.database.get("utilisateur", "username", name)
-        return request
+    def get_by_website(self, website: str):
+        """→ Récupérer des données par leur identifiant."""
+        for element in self.data:
+            if element["website"] == website: return element
+        return None
 
     def exists(self, name):
         request = self.database.get("utilisateur", "username", name)
         return request is not None
 
-    def create(self, website, login, password, encryption_type, encryption_key: str = ""):
-        new = {
+    def create(self, credentials:Credentials):
+        data = {
             "id": 1,
-            "user_id": self.user.id,
-            "website": website,
-            "login": login,
-            "password": password.encrypted,
-            "strength": 4,
-            "is_expired": False,
-            "encryption_type": encryption_type,  # AES, RSA, CESAR
-            "encryption_key": encryption_key,  # AES: Salt
+            "user_id": credentials.user_id,
+            "website": credentials.website,
+            "login": credentials.login,
+            "password": credentials.password.encrypted,
+            "strength": credentials.password.strength,
+            "encryption_type": credentials.password.encryption_type,    # (AES, RSA, CESAR)
+            "encryption_key": credentials.password.encryption_key,      # (AES: Salt)
+            "is_expired": False
         },
-        return self.database.add("credentials", "cc")
-
-    def get_rsa_keys(self, id: int):
-        request = self.database.get("utilisateur", "id", id)
-        return request["rsa_public_key"], request["rsa_private_key"]
+        return self.database.add("credentials", data)

@@ -17,7 +17,7 @@ match configuration.database_mode:
                 self.complete = self.load()
 
                 self.user = user.User(self)
-                self.credentials = credentials.Credentials(self)
+                self.credentials = credentials.DataCredentials(self)
                 self.label = None
 
             def generate(self):

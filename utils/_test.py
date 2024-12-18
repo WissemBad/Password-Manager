@@ -4,7 +4,7 @@ from app.application import App
 Application = App()
 
 public, private = Application.security.generate_rsa_keys(2048)
-message = "WIssemLPlusBeau"
+message = "WissemLPlusBeau"
 print("Message: ", message)
 print("Public key: ", public)
 encrypted = Application.security.encrypt.RSA(message, public)

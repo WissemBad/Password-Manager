@@ -3,9 +3,10 @@ from utils import configuration as configuration
 class Password:
     def __init__(self, password, encryption_type, app):
         self.app = app
-        self.strength:int = self.get_strength(password)
+
         self.encryption_type:str = encryption_type
         self.encrypted, self.encryption_key = self.encrypt(password)
+        self.strength:int = self.get_strength(password)
 
     def encrypt(self, password):
         match self.encryption_type:
@@ -32,5 +33,4 @@ class Password:
         if length > 8: strength += 1    # - Au moins 8 caractères
         if numbers >= 2: strength += 1  # - Au moins 2 chiffres
         if specials > 0: strength += 1  # - Au moins 1 caractère spécial
-
         return strength
