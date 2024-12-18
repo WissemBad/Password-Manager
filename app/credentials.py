@@ -1,3 +1,4 @@
+from app.password import Password
 from utils import methods
 from utils import configuration as configuration
 
@@ -6,20 +7,16 @@ from app.user import User
 import random
 
 class Credentials:
-    def __init__(self, app, user, website, username, password, encryption_type:str, encryption_key: str,):
+    def __init__(self, app, website: str, login: str, password: str, encryption_type:str):
         self.app = app
         self.database = self.app.database
 
-        self.user:User = user
+        self.user:User = self.app.user
         self.user_id:int = self.user.id
 
         self.website:str = website
-        self.username:str = username
-        self.password:str = self.app.security.encrypt.encryption_type(password)
-
-        self.strength:int = self.get_strength(password)
-        self.encryption_type:str = encryption_type
-        self.encryption_key:str = encryption_key
+        self.login:str = login
+        self.password = Password(password, encryption_type, self.app)
 
 
 def generate_password(strength=4, use_dictionary=False, require_numbers=True, require_special=True, mixed_case=True, length=4):
