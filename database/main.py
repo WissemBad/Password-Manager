@@ -20,35 +20,35 @@ match configuration.database_mode:
                 self.credentials = credentials.Credentials(self)
                 self.label = None
 
-            # Créer la base de données
             def generate(self):
+                """→ Générer la base de données."""
                 with open(self.database_location, "w", encoding="utf-8") as file:
                     json.dump(self.template, file, indent=4, ensure_ascii=False)
                 return self.load()
 
-            # Charger la base de données
             def load(self):
+                """→ Charger la base de données."""
                 if not os.path.exists(self.database_location): return self.generate()
                 with open(self.database_location, "r", encoding="utf-8") as file:
                     database = json.load(file)
                 return database
 
-            # Sauvegarder la base de données
             def save(self):
+                """→ Sauvegarder la base de données."""
                 with open(self.database_location, "w", encoding="utf-8") as file:
                     json.dump(self.complete, file, indent=4, ensure_ascii=False)
                 return True
 
-            # - Ajouter un élément à la base de données
             def add(self, location:str, data:dict):
+                """→ Ajouter un élément à la base de données."""
                 if not location in self.complete:
                     raise Exception(f"[✘] Erreur : [location:{location}] n'existe pas dans la base de données.")
 
                 self.complete[location].append(data)
                 return self.save()
 
-            # - Ajouter un élément à la base de données
             def find_id(self, location: str, thing: str, data):
+                """→ Trouver l'ID d'un élément dans la base de données."""
                 if not location in self.complete:
                     raise Exception(f"[✘] Erreur : [location:{location}] n'existe pas dans la base de données.")
 
@@ -57,8 +57,8 @@ match configuration.database_mode:
                         return element["id"]
                 return None
 
-            # - Récupérer un élément de la base de données grâce à l'identifiant
             def get(self, location: str, search: str, data):
+                """→ Récupérer un élément de la base de données."""
                 if not location in self.complete:
                     raise Exception(f"[✘] Erreur : [location:{location}] n'existe pas dans la base de données.")
 
@@ -68,6 +68,7 @@ match configuration.database_mode:
 
             # - Modifier un élément de la base de données
             def update(self, location: str, search: str, data, thing:str, push):
+                """→ Modifier un élément de la base de données."""
                 if not location in self.complete:
                     raise Exception(f"[✘] Erreur : [location:{location}] n'existe pas dans la base de données.")
 
@@ -77,8 +78,8 @@ match configuration.database_mode:
                         return self.save()
                 return None
 
-            # - Supprimer un élément de la base de données
             def delete(self, location:str, search: str, data):
+                """→ Supprimer un élément de la base de données."""
                 if not location in self.complete:
                     raise Exception(f"[✘] Erreur : [location:{location}] n'existe pas dans la base de données.")
 
