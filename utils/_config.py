@@ -1,11 +1,6 @@
 # 0: JSON  -  1: SQL #
 database = 0
 
-keys = {
-    "AES": "caca",
-    "CESAR": "caca"
-}
-
 characters = {
     "special": [
         "!", "@", "#", "$", "€", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+",
@@ -95,13 +90,14 @@ template = {
 
     "credentials": {
         "id": 1,
+        "user_id": 1,
         "website": "example.com",
         "login": "admin",
         "password": "hashed_password",
-        "strength": 5,
+        "strength": 4,
         "is_expired": False,
-        "user_id": 1,
-        "vector": "unique_vector"
+        "encryption_type": "", # AES, RSA, CESAR
+        "encryption_key": "", # AES: Salt
     },
 
     "label": {
