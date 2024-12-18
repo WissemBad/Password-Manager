@@ -1,7 +1,7 @@
 import os
-from app.application import App
+from application.main import Application
 
-Application = App()
+Application = Application()
 
 if __name__ == "__main__":
     # Vérifie si .env existe

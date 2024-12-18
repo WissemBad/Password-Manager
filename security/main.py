@@ -16,6 +16,12 @@ class Security:
         self.app = app
         self.manager = KeyManager()
 
+        self.hasher = None
+        self.encrypt = None
+        self.decrypt = None
+
+    def init_dependencies(self):
+        """Initialiser les dépendances de sécurité."""
         self.hasher = Hasher(self)
         self.encrypt = Encryption(self)
         self.decrypt = Decryption(self)
