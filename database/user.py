@@ -1,4 +1,4 @@
-class User:
+class DataUser:
     def __init__(self, database):
         self.database = database
         self.data = self.database.complete["utilisateur"]
