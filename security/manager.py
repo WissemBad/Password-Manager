@@ -3,6 +3,7 @@ import base64
 import random
 import time
 
+from dotenv import load_dotenv
 from utils.methods import console
 from utils import configuration
 
@@ -18,9 +19,11 @@ class KeyManager:
     aes_directory = "security/keys/encrypted_aes.key"
     csr_directory = "security/keys/encrypted_csr.key"
 
-    aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
-    rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
-    rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
+    if os.path.exists('.env'):
+        load_dotenv() # Charger les variables d'environnement
+        aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
+        rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
+        rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
 
     def double_encrypt(self, key):
         """Chiffrer doublement avec la clé AES et publique RSA."""
@@ -94,5 +97,9 @@ class KeyManager:
             env_file.write(f"AES_GLOBAL_KEY={aes_key_b64}\n")
             env_file.write(f"RSA_PUBLIC_KEY={public_key_b64}\n")
             env_file.write(f"RSA_PRIVATE_KEY={private_key_b64}\n")
-        console("green", "Les clés RSA et AES ont été générées avec succès.")
+        console("green", "Les clés RSA et AES ont été générées avec succès."), load_dotenv()
+
+        self.aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
+        self.rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
+        self.rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
         return time.sleep(1.5), True

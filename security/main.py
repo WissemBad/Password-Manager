@@ -14,19 +14,20 @@ from Crypto.Cipher import AES
 class Security:
     def __init__(self, app):
         self.app = app
-        self.manager = KeyManager(self)
+        self.manager = KeyManager()
 
         self.hasher = Hasher(self)
         self.encrypt = Encryption(self)
         self.decrypt = Decryption(self)
 
-    @staticmethod # Générer un vecteur d'initialisation dérivée du mot de passe.
+    @staticmethod
     def get_aes_vector(password: str):
+        """Obtenir un vecteur dérivé du mot de passe pour le chiffrement AES."""
         derived = PBKDF2(password, b'', count=1000000)
         return derived[:AES.block_size]
 
-    # Générer des clés de chiffrement RSA publique et privée.
     def generate_rsa_keys(self, key_size):
+        """Générer une paire de clés RSA."""
         bits = key_size // 2
         p = generate_prime(bits)
         q = generate_prime(bits)
@@ -41,7 +42,6 @@ class Security:
             e += 2
         d = pow(e, -1, phi)
 
-        # Clé publique et privée
         e_bytes = e.to_bytes((e.bit_length() + 7) // 8, byteorder='big')
         n_bytes = n.to_bytes((n.bit_length() + 7) // 8, byteorder='big')
         d_bytes = d.to_bytes((d.bit_length() + 7) // 8, byteorder='big')
