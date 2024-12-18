@@ -1,12 +1,11 @@
 import os
 import json
+from utils import configuration
 
-from utils import configuration as configuration
-
-from database import user, credentials
+from database.user import DataUser
+from database.credentials import DataCredentials
 
 match configuration.database_mode:
-
     case 0: # DATABASE MODE : JSON
         class Database:
             database_location = "database/_data/database.json"
@@ -16,8 +15,13 @@ match configuration.database_mode:
                 self.app = app
                 self.complete = self.load()
 
-                self.user = user.User(self)
-                self.credentials = credentials.DataCredentials(self)
+                self.user = DataUser(self)
+                self.credentials = None
+                self.label = None
+
+            def init_dependencies(self):
+                """→ Initialiser les dépendances de l'utilisateur."""
+                self.credentials = DataCredentials(self)
                 self.label = None
 
             def generate(self):
