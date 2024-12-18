@@ -1,22 +1,26 @@
 import os
 import base64
 import random
+import time
+
+from utils.methods import console
+from utils import configuration
 
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
 
-class KeyManager:   
-    def __init__(self, instance):
-        self.instance = instance
+class KeyManager:
+    aes_global_key_size: int = configuration.security["aes_global_key_size"]
+    rsa_global_key_size: int = configuration.security["rsa_global_key_size"]
 
-        self.aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
-        self.rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
-        self.rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
+    aes_directory = "security/keys/encrypted_aes.key"
+    csr_directory = "security/keys/encrypted_csr.key"
 
-        self.aes_directory = "security/keys/encrypted_aes.key"
-        self.csr_directory = "security/keys/encrypted_csr.key"
+    aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
+    rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
+    rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
 
     def double_encrypt(self, key):
         """Chiffrer doublement avec la clé AES et publique RSA."""
@@ -32,7 +36,7 @@ class KeyManager:
 
     # — Générer une clé secrète AES
     def aes_key_generate(self):
-        aes_key = get_random_bytes(32)  # Générer une clé AES de 256 bits
+        aes_key = get_random_bytes(int(self.aes_global_key_size/8))
         doubly_encrypted_aes_key = self.double_encrypt(aes_key)
 
         directory = os.path.dirname(self.aes_directory)
@@ -73,3 +77,22 @@ class KeyManager:
 
         csr_key = self.double_decrypt(doubly_encrypted_csr_key)
         return int.from_bytes(csr_key, byteorder='big') % 26
+
+    def initialize_security(self):
+        console("yellow", "[🛈] Info : Initialisation des clés RSA et AES pour l'application...")
+        aes_key = get_random_bytes(int(self.aes_global_key_size/8))
+        rsa_key = RSA.generate(self.rsa_global_key_size)
+
+        private_key = rsa_key.export_key()
+        public_key = rsa_key.publickey().export_key()
+
+        aes_key_b64 = base64.b64encode(aes_key).decode('utf-8')
+        private_key_b64 = base64.b64encode(private_key).decode('utf-8')
+        public_key_b64 = base64.b64encode(public_key).decode('utf-8')
+
+        with open('.env', 'w') as env_file:
+            env_file.write(f"AES_GLOBAL_KEY={aes_key_b64}\n")
+            env_file.write(f"RSA_PUBLIC_KEY={public_key_b64}\n")
+            env_file.write(f"RSA_PRIVATE_KEY={private_key_b64}\n")
+        console("green", "Les clés RSA et AES ont été générées avec succès.")
+        return time.sleep(1.5), True
