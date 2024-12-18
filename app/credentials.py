@@ -1,5 +1,5 @@
 from utils import methods
-from utils import _config as configuration
+from utils import configuration as configuration
 
 from app.user import User
 

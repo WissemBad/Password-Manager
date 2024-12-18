@@ -1,5 +1,13 @@
 # 0: JSON  -  1: SQL #
-database = 0
+database_mode = 0
+
+security = {
+    "aes_global_key_size": 256,
+    "rsa_global_key_size": 8192,
+
+    "aes_standard_key_size": 256,
+    "rsa_standard_key_size": 2048
+}
 
 characters = {
     "special": [

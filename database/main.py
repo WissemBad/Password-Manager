@@ -1,41 +1,41 @@
 import os
 import json
 
-from utils import _config as configuration
+from utils import configuration as configuration
 
 from database import user, credentials
 
-match configuration.database:
+match configuration.database_mode:
 
     case 0: # DATABASE MODE : JSON
         class Database:
+            database_location = "database/_data/database.json"
+            template = configuration.template["database"]
+            
             def __init__(self, app):
                 self.app = app
-                self.user = self.app.user
-
-                self.template = configuration.template["database"]
                 self.complete = self.load()
 
                 self.user = user.User(self)
                 self.credentials = credentials.Credentials(self)
-                self.label = self.complete["label"]
+                self.label = None
 
             # Créer la base de données
             def generate(self):
-                with open("database/_data/database.json", "w", encoding="utf-8") as file:
+                with open(self.database_location, "w", encoding="utf-8") as file:
                     json.dump(self.template, file, indent=4, ensure_ascii=False)
                 return self.load()
 
             # Charger la base de données
             def load(self):
-                if not os.path.exists("database/_data/database.json"): return self.generate()
-                with open("database/_data/database.json", "r", encoding="utf-8") as file:
+                if not os.path.exists(self.database_location): return self.generate()
+                with open(self.database_location, "r", encoding="utf-8") as file:
                     database = json.load(file)
                 return database
 
             # Sauvegarder la base de données
             def save(self):
-                with open("database/_data/database.json", "w", encoding="utf-8") as file:
+                with open(self.database_location, "w", encoding="utf-8") as file:
                     json.dump(self.complete, file, indent=4, ensure_ascii=False)
                 return True
 
