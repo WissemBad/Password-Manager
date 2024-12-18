@@ -3,7 +3,7 @@ import time
 from utils import methods
 from utils import ui
 
-from database.init import Database
+from database.main import Database
 from security.main import Security
 
 from app.user import User
@@ -20,6 +20,14 @@ class App:
 
         self.logged_in = False
         self.user = None
+
+    def run(self):
+        """→ Démarrage de l'application."""
+        methods.clear_terminal()
+        ui.starting_app()
+        methods.pending_load()
+        methods.clear_terminal()
+        return self.auth.choice()
 
     def after_connect(self):
         methods.clear_terminal()

@@ -1,5 +1,5 @@
 import base64
-from utils import _config as configuration
+from utils import configuration as configuration
 
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad

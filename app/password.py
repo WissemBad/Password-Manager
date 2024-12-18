@@ -1,4 +1,4 @@
-from utils import _config as configuration
+from utils import configuration as configuration
 
 class Password:
     def __init__(self, password, encryption_type, app):

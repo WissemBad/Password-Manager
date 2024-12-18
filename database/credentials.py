@@ -16,7 +16,7 @@ class Credentials:
         request = self.database.get("utilisateur", "username", name)
         return request is not None
 
-    def create(self, website, login, password:Password, encryption_type, encryption_key: str = ""):
+    def create(self, website, login, password, encryption_type, encryption_key: str = ""):
         new = {
             "id": 1,
             "user_id": self.user.id,
@@ -28,7 +28,7 @@ class Credentials:
             "encryption_type": encryption_type,  # AES, RSA, CESAR
             "encryption_key": encryption_key,  # AES: Salt
         },
-        return self.database.add("credentials", user)
+        return self.database.add("credentials", "cc")
 
     def get_rsa_keys(self, id: int):
         request = self.database.get("utilisateur", "id", id)

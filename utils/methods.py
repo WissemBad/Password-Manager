@@ -3,7 +3,7 @@ import sys
 import random
 import requests
 
-from utils._config import style
+from utils.configuration import style
 
 def console(arg: str, text: str, mode: str = "colors", action = print):
     return action(f"{style[mode][arg]}{text}{style["reset"]}")
