@@ -121,13 +121,7 @@ template = {
         "strength": 4,  # Note de robustesse
         "is_expired": False,    # Expiration (Historique)
         "encryption_type": "",  # AES, RSA, CESAR
-        "encryption_key": ""    # AES: Salt
+        "encryption_key": "",    # AES: Salt
+        "labels": []            # Références vers les labels
     },
-
-    # → Exemple de label
-    "label": {
-        "id": 1,
-        "text": "Important",
-        "credentials_id": [1, 2, 3]  # Identifiants liés à ce label
-    }
 }

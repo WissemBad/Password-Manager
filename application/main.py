@@ -37,6 +37,7 @@ class Application:
         self.terminal = Terminal(self)
         self.database.init_dependencies()
         self.security.init_dependencies()
+        self.user.init_dependencies(self.user.pwd)
 
     def after_connect(self):
         """→ Menu principal après connexion."""
@@ -49,7 +50,11 @@ class Application:
                 response = int(input("→ ").strip())
                 match response:
                     case 0:
-                        return self.terminal.main()
+                        try:
+                            return self.terminal.main()
+                        except Exception as error:
+                            methods.console("bright_red", f"[✘] Erreur inconnue liée au terminal : {error}")
+                            time.sleep(2)
                     case 1:
                         methods.console("bright_red", "[✘] Erreur : La fonction n'est pas encore implémentée.")
                         time.sleep(1)

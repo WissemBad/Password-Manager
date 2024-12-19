@@ -28,10 +28,11 @@ class Security:
     @staticmethod
     def get_aes_vector(password: str):
         """→ Obtenir un vecteur dérivé du mot de passe pour le chiffrement AES."""
+        print(password)
         derived = PBKDF2(password, b'', count=1000000)
         return derived[:AES.block_size]
 
-    def generate_rsa_keys(self, key_size):
+    def generate_rsa_keys(self, key_size, user_vector):
         """→ Générer une paire de clés RSA."""
         bits = key_size // 2
         p = generate_prime(bits)
@@ -51,7 +52,7 @@ class Security:
         n_bytes = n.to_bytes((n.bit_length() + 7) // 8, byteorder='big')
         d_bytes = d.to_bytes((d.bit_length() + 7) // 8, byteorder='big')
 
-        private_encryption = [self.manager.double_encrypt(d_bytes), self.manager.double_encrypt(n_bytes)]
+        private_encryption = [self.manager.double_encrypt(d_bytes, user_vector), self.manager.double_encrypt(n_bytes, user_vector)]
 
         public_key = [base64.b64encode(e_bytes).decode('utf-8'), base64.b64encode(n_bytes).decode('utf-8')]
         private_key = [base64.b64encode(private_encryption[0]).decode('utf-8'), base64.b64encode(private_encryption[1]).decode('utf-8')]

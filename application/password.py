@@ -1,12 +1,14 @@
 from utils import configuration as configuration
 
 class Password:
-    def __init__(self, password, encryption_type, app):
+    def __init__(self, password, encryption_type, app, key_cesar = None):
         self.app = app
+        self.key_cesar = key_cesar
 
         self.encryption_type:str = encryption_type
         self.encrypted, self.encryption_key = self.encrypt(password)
         self.strength:int = self.get_strength(password)
+
 
     def encrypt(self, password):
         match self.encryption_type:
@@ -15,12 +17,12 @@ class Password:
             case "RSA":
                 return self.app.security.encrypt.RSA(password, self.app.user.rsa_public_key), None
             case "CESAR":
-                return self.app.security.encrypt.CESAR(password), None
+                return self.app.security.encrypt.CESAR(password, self.key_cesar), self.key_cesar
             case _: return None, None
 
     @staticmethod
     def get_strength(password):
-        strength = 1
+        strength = 0
         numbers = 0
         specials = 0
         length = len(password)

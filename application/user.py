@@ -2,7 +2,7 @@ from utils import methods
 from utils import configuration
 
 
-class User(object):
+class User:
     def __init__(self, username: str, password: str, app):
         self.app = app
         self.database = app.database
@@ -13,13 +13,12 @@ class User(object):
         self.exists = self.database.user.exists(self.username)
         self.id:int = self.get_id()
 
-        self.aes_encryption_key = None
+        self.aes_encryption_key = self.app.security.get_aes_vector(password)
         self.rsa_public_key = None
         self.rsa_private_key = None
 
-    def init_dependencies(self, password = None):
+    def init_dependencies(self):
         """→ Initialiser les dépendances de l'utilisateur."""
-        self.aes_encryption_key = self.app.security.get_aes_vector(password)
         self.rsa_public_key, self.rsa_private_key = self.database.user.get_encryption_keys(self.id)
 
     def get_id(self):
@@ -30,7 +29,7 @@ class User(object):
     def register(self):
         """→ Enregistrer un nouveau compte utilisateur."""
         methods.console("blue", "[ί] Création de clé de chiffrement personnelle...")
-        self.rsa_public_key, self.rsa_private_key = self.app.security.generate_rsa_keys(configuration.security["rsa_standard_key_size"])
+        self.rsa_public_key, self.rsa_private_key = self.app.security.generate_rsa_keys(configuration.security["rsa_standard_key_size"], self.aes_encryption_key)
         return self.database.user.create(self)
 
     def delete(self):

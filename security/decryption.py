@@ -8,31 +8,32 @@ class Decryption:
     def __init__(self, instance):
         self.security = instance
 
-    def CESAR(self, pwd: str):
+    def CESAR(self, pwd: str, increment: int or None = None):
         """→ Déchiffrer avec la méthode de César."""
         response = ""
+        if increment is None: increment = self.security.manager.csr_key_load()
+
         for char in pwd:
             if char in configuration.characters["alphabet"]:
-                index = configuration.characters["alphabet"].index(char) - self.security.manager.csr_load_key()
-                if not index >= 0: index = len(configuration.characters["alphabet"]) + index
+                index = (configuration.characters["alphabet"].index(char) - increment) % len(configuration.characters["alphabet"])
                 char = configuration.characters["alphabet"][index]
             elif char in configuration.characters["ALPHABET"]:
-                index = configuration.characters["ALPHABET"].index(char) - self.security.manager.csr_load_key()
-                if not index >= 0: index = len(configuration.characters["ALPHABET"]) + index
+                index = (configuration.characters["ALPHABET"].index(char) - increment) % len(configuration.characters["ALPHABET"])
                 char = configuration.characters["ALPHABET"][index]
             elif char in configuration.characters["special"]:
-                index = configuration.characters["special"].index(char) - self.security.manager.csr_load_key()
-                if not index >= 0: index = len(configuration.characters["special"]) + index
+                index = (configuration.characters["special"].index(char) - increment) % len(configuration.characters["special"])
                 char = configuration.characters["special"][index]
             elif char in configuration.characters["numbers"]:
-                char = abs(int(char) - self.security.manager.csr_load_key())
+                index = (configuration.characters["special"].index(char) - increment) % len(configuration.characters["numbers"])
+                char = configuration.characters["special"][index]
             response += str(char)
         return response
 
-    def AES(self, encrypted: bytes, vector: str, salt: str):
+    def AES(self, encrypted: str, vector: str, salt: str):
         """→ Déchiffrer avec la méthode AES."""
-        salt = base64.b64decode(salt)
-        cipher = AES.new(self.security.manager.aes_load_key(), AES.MODE_CBC, vector)
+        salt = base64.b64decode(salt.encode('utf-8'))
+        encrypted = base64.b64decode(encrypted.encode('utf-8'))
+        cipher = AES.new(self.security.manager.aes_key_load(), AES.MODE_CBC, vector)
 
         decrypted = unpad(cipher.decrypt(encrypted), AES.block_size)
         decrypted = decrypted.decode('utf-8').removesuffix(salt.decode('utf-8'))

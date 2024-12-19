@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import requests
+import datetime
 
 from utils.configuration import style
 
@@ -124,3 +125,9 @@ def generate_prime(bits):
         num = random.getrandbits(bits)
         if num % 2 == 0: num += 1
         if is_prime(num): return num
+
+
+def get_current_time():
+    """Renvoie l'heure actuelle sous un format compatible avec JSON."""
+    current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return current_time

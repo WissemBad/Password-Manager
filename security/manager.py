@@ -25,15 +25,17 @@ class KeyManager:
         rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
         rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
 
-    def double_encrypt(self, key):
+    def double_encrypt(self, key, user_vector=None):
         """→ Chiffrer doublement avec la clé AES et publique RSA."""
         encrypted_key = PKCS1_OAEP.new(self.rsa_public_key).encrypt(key)
-        doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_ECB).encrypt(pad(encrypted_key, AES.block_size))
+        if user_vector is None: doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_ECB).encrypt(pad(encrypted_key, AES.block_size))
+        else: doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_CBC, user_vector).encrypt(pad(encrypted_key, AES.block_size))
         return doubly_encrypted_key
 
-    def double_decrypt(self, doubly_encrypted_key):
+    def double_decrypt(self, doubly_encrypted_key, user_vector=None):
         """→ Déchiffrer doublement avec la clé AES et privée RSA."""
-        encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_ECB).decrypt(doubly_encrypted_key), AES.block_size)
+        if user_vector is None: encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_ECB).decrypt(doubly_encrypted_key), AES.block_size)
+        else: encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_CBC, user_vector).decrypt(doubly_encrypted_key), AES.block_size)
         key = PKCS1_OAEP.new(self.rsa_private_key).decrypt(encrypted_key)
         return key
 
@@ -49,14 +51,12 @@ class KeyManager:
 
     def aes_key_load(self):
         """→ Charger la clé secrète AES."""
-        if not os.path.exists(self.aes_directory) or os.path.getsize(self.aes_directory) == 0:
-            return self.aes_key_generate()
+        if not os.path.exists(self.aes_directory): return self.aes_key_generate()
 
         with open(self.aes_directory, "rb") as key_file:
             doubly_encrypted_aes_key = key_file.read()
 
-        aes_key = self.double_decrypt(doubly_encrypted_aes_key)
-        return aes_key
+        return self.double_decrypt(doubly_encrypted_aes_key)
 
     def csr_key_generate(self):
         """→ Générer une clé secrète César et l'enregistrer dans un fichier."""
