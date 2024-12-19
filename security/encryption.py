@@ -11,6 +11,7 @@ class Encryption:
         self.security = instance
 
     def CESAR(self, pwd: str):
+        """→ Chiffrer avec la méthode de César."""
         response = ""
         for char in pwd:
             if char in configuration.characters["alphabet"]:
@@ -34,6 +35,7 @@ class Encryption:
         return response
 
     def AES(self, password: str, vector: str):
+        """→ Chiffrer avec la méthode AES."""
         salt = get_random_bytes(AES.block_size)
         cipher = AES.new(self.security.manager.aes_load_key(), AES.MODE_CBC, vector)
 
@@ -42,6 +44,7 @@ class Encryption:
 
     @staticmethod
     def RSA(password: str, public_key):
+        """→ Chiffrer avec la méthode RSA."""
         e_bytes, n_bytes = base64.b64decode(public_key[0]), base64.b64decode(public_key[1])
         e, n = int.from_bytes(e_bytes, byteorder='big'), int.from_bytes(n_bytes, byteorder='big')
 
@@ -49,7 +52,8 @@ class Encryption:
         encrypted = pow(crypt, e, n)
         return encrypted
 
-
-    def custom(self):
+    @staticmethod
+    def custom():
+        """→ Chiffrer avec une méthode personnalisée."""
         return True
 

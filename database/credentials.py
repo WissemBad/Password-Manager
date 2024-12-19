@@ -1,4 +1,4 @@
-from app.credentials import Credentials
+from application.credentials import Credentials
 
 
 class DataCredentials:
