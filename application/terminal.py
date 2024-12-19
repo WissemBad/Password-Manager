@@ -1,14 +1,12 @@
 import datetime
 import os
 import shlex
-import argparse
 
 from utils import methods
 from utils import ui
 
-from application.commands.help import Help
-from application.commands.credentials import Credentials  # Assurez-vous que Credentials utilise argparse
-from application.commands.label import Label  # Si tu as une commande label, ajoute-la ici
+from application.commands.help import HelpCommand
+from application.commands.credentials import CredentialsCommand
 
 class Terminal:
     commands_directory = "./application/commands"
@@ -19,31 +17,7 @@ class Terminal:
         self.user = self.app.user
         self.database = self.app.database
 
-        self.parser = self.create_parser()
-
-    @staticmethod
-    def create_parser():
-        """ → Crée le parser principal et les sous-commandes."""
-        parser = argparse.ArgumentParser(description="Gestionnaire de commandes.")
-        subparsers = parser.add_subparsers(dest="command", required=False)
-
-        # - Crée les sous-commandes associées à 'help'
-        credentials_parser = subparsers.add_parser('credentials', help="Gestion des mots de passe")
-        Credentials(credentials_parser)
-
-        # - Crée les sous-commandes associées à 'label'
-        label_parser = subparsers.add_parser('label', help="Gestion des étiquettes")
-        Label(label_parser)
-        return parser
-
-    def get_commands(self):
-        """→ Récupération des commandes existantes (avec argparse)."""
-        commands = self.commands_base
-        for command_group in os.listdir(self.commands_directory):
-            if command_group.endswith('.py'):
-                command_name = os.path.splitext(command_group)[0]
-                commands.append(command_name)
-        return commands
+        self.commands = self.load_commands()
 
     def main(self):
         """→ Affichage du terminal."""
@@ -51,39 +25,70 @@ class Terminal:
         ui.menu_terminal()
         return self.command()
 
+    def load_commands(self):
+        """→ Chargement des commandes disponibles."""
+        found_commands = self.commands_base
+        for file in os.listdir(self.commands_directory):
+
+            if file.endswith(".py") and file != "__init__.py":
+                command = file.replace(".py", "")
+                found_commands.append(command)
+        return found_commands
+
     def command(self):
-        """→ Gestion des commandes du terminal avec argparse."""
+        """→ Gestion des commandes du terminal."""
         while True:
-            request = input(f"\033[2m[{datetime.datetime.now().strftime('%H:%M:%S')}]\033[0m → {self.user.username}@uncracked: ").strip().lower()
-            formatted = self.split_command(request)
+            request = input(f"\033[2m[{datetime.datetime.now().strftime('%H:%M:%S')}]\033[0m → {self.user.username}@uncracked: ").strip()
+            formatted = self.parse_command(request)
             if not formatted: continue
 
-            if formatted[0] not in self.get_commands():
-                methods.console("red", f"→ '{formatted[0]}' n'est pas reconnue comme une commande valide.\n\033[3mUtilisez 'help' pour afficher les commandes disponibles.")
+            command = formatted.get("command")
+            if command not in self.commands:
+                methods.console("red", f"→ '{command}' n'est pas reconnue comme une commande valide.\n\033[3mUtilisez 'help' pour afficher les commandes disponibles.")
                 continue
-            try:
-                args, unknown = self.parser.parse_known_args(formatted)
-                if args.command is None: methods.console("red", f"→ '{formatted[0]}' n'est pas reconnue comme une commande valide.\n\033[3mUtilisez 'help' pour afficher les commandes disponibles.")
-                else: self.handle_command(args)
-            except SystemExit: pass
 
-    def handle_command(self, args):
-        """→ Traite la commande après validation par argparse."""
-        match args.command:
-            case "help": Help(args)
-            case "clear": return self.clear()
+            self.handle_command(formatted)
+
+    def handle_command(self, request: dict):
+        """→ Traite la commande après validation manuelle."""
+        match request.get("command"):
+            case "help": return HelpCommand(self, request)
             case "exit": return self.app.after_connect()
             case "quit": return self.app.quit()
-            # Ex : case "credentials": Credentials.handle(args) ou autre logique
+            case "clear": return self.clear()
+            case "credentials": return CredentialsCommand(self, request)
+
+    def help(self, command=None, subcommand=None):
+        """→ Affiche l'aide générale ou spécifique."""
+        HelpCommand(self, {"command": "help", "subcommand": command, "args": {subcommand: None}})
+        return self.command()
 
     @staticmethod
-    def split_command(command):
-        """→ Séparation de la commande en arguments à l'aide de shlex.split."""
+    def parse_command(command):
+        """→ Séparation de la commande en arguments dans un dictionnaire."""
         try:
-            return shlex.split(command)
+            command_list = shlex.split(command)
+            command_dict = {
+                "command": command_list[0],
+                "subcommand": command_list[1] if len(command_list) > 1 and not command_list[1].startswith('--') else None,
+                "args": {}
+            }
+
+            i = 2 if command_dict["subcommand"] else 1
+            while i < len(command_list):
+                option = command_list[i].lstrip('--')
+                if i + 1 < len(command_list) and not command_list[i + 1].startswith('--'):
+                    value = command_list[i + 1]
+                    if value and (' ' in value or ',' in value): value = [v.strip() for v in value.replace(',', ' ').split()]
+                    i += 2
+                else:
+                    value = None
+                    i += 1
+                command_dict["args"][option.lower()] = value
+            return command_dict
         except ValueError as error:
             methods.console("red", f"[✘] Erreur : {error}")
-            return []
+            return {}
 
     def clear(self):
         """→ Nettoyage du terminal."""

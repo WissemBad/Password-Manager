@@ -1,18 +1,37 @@
+import os
+from application.main import Application
+from application.user import User
+
+import math
 import base64
-from app.main import Application
+
+from security.hash import Hasher
+from security.manager import KeyManager
+from security.encryption import Encryption
+from security.decryption import Decryption
+from utils.methods import generate_prime
+
+from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Cipher import AES
+
+import os
+from application.main import Application
+from application.user import User
 
 Application = Application()
 
-public, private = Application.security.generate_rsa_keys(2048)
-message = "WissemLPlusBeau"
-print("Message: ", message)
-print("Public key: ", public)
-encrypted = Application.security.encrypt.RSA(message, public)
+def get_aes_vector(password: str):
+    """→ Obtenir un vecteur dérivé du mot de passe pour le chiffrement AES."""
+    derived = PBKDF2(password, b'', count=1000000)
+    return derived[:AES.block_size]
 
-private_key = [
-                base64.b64encode(Application.security.manager.double_decrypt(base64.b64decode(private[0].encode("utf-8")))),
-                base64.b64encode(Application.security.manager.double_decrypt(base64.b64decode(private[1].encode("utf-8"))))
-               ]
+if __name__ == "__main__":
+    # Vérifie si .env existe
+    if not os.path.exists(".env"): Application.security.manager.initialize_security()
 
-print(Application.security.decrypt.RSA(encrypted, private_key))
+    # Lancer l'application
+    Application.user = User("wissem", "Wissem", Application)
+    Application.after_connect()
 
+    # Application.init_dependencies()
+    # print(Application.security.encrypt.AES("Wissem", get_aes_vector("Wissem")))

@@ -1,61 +1,68 @@
-import argparse
+from utils import methods
+from application.credentials import Credentials
 
+class CredentialsCommand:
+    def __init__(self, terminal, args):
+        self.instance = terminal
+        self.arguments = args
 
-class Credentials:
-    def __init__(self, parser):
-        self.parser = parser
-        self.subparsers = self.parser.add_subparsers(dest='command')
-        self.register_subcommands()
+        self.handle()
 
-    def register_subcommands(self):
-        """Enregistre toutes les sous-commandes de credentials."""
+    def handle(self):
+        match self.arguments["subcommand"]:
+            case "add": self.add()
+            case "remove": self.remove(self.arguments)
+            case "edit": self.edit(self.arguments)
+            case "show": self.show(self.arguments)
+            case "list": self.list_entries(self.arguments)
+            case "audit": self.audit(self.arguments)
+            # case "history": self.history(self.arguments)
+            # case "generate": self.generate(self.arguments)
+            case _: self.instance.help("credentials")
 
-        # Commande 'add'
-        add_parser = self.subparsers.add_parser("add", help="Ajoute une nouvelle entrée d'identifiants.")
-        add_parser.add_argument("--website", required=True, help="URL du site.")
-        add_parser.add_argument("--login", required=True, help="Identifiant.")
-        add_parser.add_argument("--password", required=True, help="Mot de passe.")
-        add_parser.add_argument("--encryption-type", required=True, choices=["AES", "RSA", "CESAR"],
-                                help="Type de chiffrement.")
-        add_parser.set_defaults(func=self.add)
-
-        # Commande 'remove'
-        remove_parser = self.subparsers.add_parser("remove", help="Supprime une entrée.")
-        remove_parser.add_argument("id", help="ID de l'entrée à supprimer.")
-        remove_parser.set_defaults(func=self.remove)
-
-        # Commande 'edit'
-        edit_parser = self.subparsers.add_parser("edit", help="Modifie les détails d'une entrée existante.")
-        edit_parser.add_argument("id", help="ID de l'entrée à modifier.")
-        edit_parser.add_argument("--website", help="Nouvelle URL.")
-        edit_parser.add_argument("--login", help="Nouveau login.")
-        edit_parser.add_argument("--password", help="Nouveau mot de passe.")
-        edit_parser.add_argument("--label", help="Nouvelle étiquette.")
-        edit_parser.set_defaults(func=self.edit)
-
-        # Commande 'show'
-        show_parser = self.subparsers.add_parser("show", help="Affiche les détails d'une entrée spécifique.")
-        show_parser.add_argument("id", help="ID de l'entrée à afficher.")
-        show_parser.set_defaults(func=self.show)
-
-        # Commande 'list'
-        list_parser = self.subparsers.add_parser("list", help="Liste toutes les entrées.")
-        list_parser.add_argument("--label", help="Filtre par label.")
-        list_parser.set_defaults(func=self.list_entries)
-
-        # Commande 'audit'
-        audit_parser = self.subparsers.add_parser("audit", help="Effectue un audit des entrées.")
-        audit_parser.add_argument("--weak", action="store_true", help="Filtrer les entrées faibles.")
-        audit_parser.add_argument("--expired", action="store_true", help="Filtrer les entrées expirées.")
-        audit_parser.set_defaults(func=self.audit)
-
-    def add(self, args):
+    def add(self):
         """Logique associée à la commande 'add'."""
-        print(
-            f"Ajout d'une entrée : site={args.website}, login={args.login}, password={args.password}, encryption={args.encryption_type}")
+        # - Vérification des arguments manquants
+        required_args = ["website", "login", "password", "encryption_type"]
+        missing_args = [arg for arg in required_args if arg not in self.arguments["args"].keys()]
+        if missing_args: return methods.console("bright_red", f"[✘] Erreur : Argument(s) manquant(s) : {', '.join(missing_args)}"), self.instance.help("credentials", "add")
+
+        # - Récupérer et normaliser les données facultatives
+        labels = self.arguments["args"].get("label", [])
+        labels = [label.lower() for label in labels] if labels else []
+        encryption_key = None
+        try: encryption_key = int(self.arguments["args"].get("encryption_key")) if self.arguments["args"].get("encryption_key") else None
+        except ValueError: methods.console("yellow", "[ί] Attention : La clé de chiffrement doit être un nombre entier.\nUtilisation de la clé de chiffrement par défaut.")
+
+        # - Construction des données
+        data = {
+            "id": methods.auto_increment(self.instance.app.database.credentials.data),
+            "website": self.arguments["args"]["website"].lower(),
+            "login": self.arguments["args"]["login"],
+            "password": self.arguments["args"]["password"],
+            "encryption_type": self.arguments["args"]["encryption_type"].upper(),
+            "encryption_key": encryption_key,
+            "labels": labels
+        }
+
+        # - Vérification du type de chiffrement
+        if data["encryption_type"] not in ["AES", "RSA", "CESAR"]:
+            methods.console("bright_red", "[✘] Erreur : Type de chiffrement invalide. Utilisez 'AES', 'RSA' ou 'CESAR'.")
+            return self.instance.help("credentials", "add")
+
+        credential = Credentials(self.instance.app, **data)
+        if credential.create(): methods.console("green", "[✔] Succès : Vos credentials ont été enregistrés avec succès.")
+        else: methods.console("bright_red", "[✘] Erreur : Une erreur s'est produite lors de l'enregistrement de vos credentials.")
+        return self.instance.command()
 
     def remove(self, args):
         """Logique associée à la commande 'remove'."""
+        required_args = ["id"]
+        missing_args = [arg for arg in required_args if arg not in self.arguments["args"].keys()]
+        if missing_args:
+            methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) : {', '.join(missing_args)}")
+            self.instance.help("credentials", "remove")
+
         print(f"Suppression de l'entrée {args.id}.")
 
     def edit(self, args):

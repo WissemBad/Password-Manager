@@ -18,12 +18,9 @@ class Authentification:
             try:
                 response = int(input("→ ").strip())
                 match response:
-                    case 0:
-                        return self.login()
-                    case 1:
-                        return self.register()
-                    case 2:
-                        return self.app.quit()
+                    case 0: return self.login()
+                    case 1: return self.register()
+                    case 2: return self.app.quit()
                     case _:
                         methods.console("bright_red", "[✘] Erreur : L'option sélectionnée n'existe pas.")
                         time.sleep(1.5)
@@ -65,7 +62,7 @@ class Authentification:
             methods.console("green", f"[✔] Succès : Votre compte [{username}] a été créé !")
             self.app.logged_in = True
             self.app.user = user
-            methods.console("bright_yellow", f"[🛈] Info : Redirection vers le menu principal dans 3s...")
+            methods.console("bright_yellow", f"[ί] Info : Redirection vers le menu principal dans 3s...")
             time.sleep(1.8)
             return self.app.after_connect()
         else:
@@ -79,7 +76,7 @@ class Authentification:
         self.app.logged_in = False
         self.app.user = None
         self.app.terminal = None
-        methods.console("bright_yellow", f"[🛈] Info : Redirection vers l'accueil...")
+        methods.console("bright_yellow", f"[ί] Info : Redirection vers l'accueil...")
         time.sleep(3)
         return self.choice()
 

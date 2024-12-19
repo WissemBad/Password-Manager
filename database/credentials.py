@@ -1,4 +1,5 @@
 from application.credentials import Credentials
+from utils import methods
 
 
 class DataCredentials:
@@ -7,7 +8,12 @@ class DataCredentials:
         self.user = self.database.app.user
 
         self.data = self.database.complete["credentials"]
-        self.user_data = self.get_user_credentials(self.user.id)
+        self.dataCredentials = self.get_user_credentials(self.user.id)
+
+    def exists(self, id: int):
+        """→ Vérifier si des données existent."""
+        request = self.database.get("credentials", "id", id)
+        return request is not None
 
     def get_user_credentials(self, user_id: int):
         """→ Récupérer les données d'un utilisateur."""
@@ -16,26 +22,41 @@ class DataCredentials:
             if element["user_id"] == user_id: response.append(element)
         return response
 
-    def get_by_website(self, website: str):
-        """→ Récupérer des données par leur identifiant."""
+    def edit(self, id: int, data: dict):
+        """→ Modifier des données dans la base de données."""
         for element in self.data:
-            if element["website"] == website: return element
-        return None
-
-    def exists(self, name):
-        request = self.database.get("utilisateur", "username", name)
-        return request is not None
+            if element["id"] == id:
+                element.update(data)
+                element["history"].insert(0, generate_history(data))
+                return self.database.save()
+        return False
 
     def create(self, credentials:Credentials):
+        """→ Ajouter des données à la base de données."""
         data = {
-            "id": 1,
+            "id": credentials.id,
             "user_id": credentials.user_id,
             "website": credentials.website,
             "login": credentials.login,
             "password": credentials.password.encrypted,
             "strength": credentials.password.strength,
             "encryption_type": credentials.password.encryption_type,    # (AES, RSA, CESAR)
-            "encryption_key": credentials.password.encryption_key,      # (AES: Salt)
-            "is_expired": False
-        },
+            "encryption_key": credentials.password.encryption_key, # (AES: Salt, CESAR: Key)
+            "labels": credentials.labels,
+            "created_at": methods.get_current_time(),
+            "history": []
+        }
         return self.database.add("credentials", data)
+
+
+def generate_history(data):
+    """→ Générer l'historique des mots de passe."""
+    return {
+        "website": data["website"],
+        "login": data["login"],
+        "password": data["password"],
+        "strength": data["strength"],
+        "encryption_type": data["encryption_type"],
+        "encryption_key": data["encryption_key"],
+        "created_at": data["created_at"]
+    }

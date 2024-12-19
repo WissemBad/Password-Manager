@@ -1,6 +1,6 @@
 import os
 import json
-from utils import configuration
+from utils import configuration, methods
 
 from database.user import DataUser
 from database.credentials import DataCredentials
@@ -22,7 +22,6 @@ match configuration.database_mode:
             def init_dependencies(self):
                 """→ Initialiser les dépendances de l'utilisateur."""
                 self.credentials = DataCredentials(self)
-                # self.label = DataLabel(self)
 
             def generate(self):
                 """→ Générer la base de données."""
@@ -39,9 +38,13 @@ match configuration.database_mode:
 
             def save(self):
                 """→ Sauvegarder la base de données."""
-                with open(self.database_location, "w", encoding="utf-8") as file:
-                    json.dump(self.complete, file, indent=4, ensure_ascii=False)
-                return True
+                try:
+                    with open(self.database_location, "w", encoding="utf-8") as file:
+                        json.dump(self.complete, file, indent=4, ensure_ascii=False)
+                    return True
+                except Exception as error:
+                    methods.console("red", f"[✘] Erreur : Enregistrement impossible de la base de données : {error}")
+                    return False
 
             def add(self, location:str, data:dict):
                 """→ Ajouter un élément à la base de données."""
