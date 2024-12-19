@@ -12,14 +12,17 @@ from application.authentification import Authentification
 
 class Application:
     def __init__(self):
+        # → Initialisation des dépendances
         self.database = Database(self)
         self.security = Security(self)
 
+        # → Chargement des modules
         self.auth = Authentification(self)
         self.terminal = None
 
+        # → Variables de session
         self.logged_in = False
-        self.user = None
+        self.user: User or None = None
 
     def run(self):
         """→ Démarrage de l'application."""
@@ -30,11 +33,13 @@ class Application:
         return self.auth.choice()
 
     def init_dependencies(self):
+        """→ Initialiser les dépendances de l'application."""
         self.terminal = Terminal(self)
         self.database.init_dependencies()
         self.security.init_dependencies()
 
     def after_connect(self):
+        """→ Menu principal après connexion."""
         while True:
             self.init_dependencies()
             methods.clear_terminal()
@@ -57,11 +62,27 @@ class Application:
                 methods.console("bright_red", "[✘] Erreur : Vous devez entrer un chiffre.")
                 time.sleep(1)
 
-    def quit(self):
+    def reset(self):
+        """→ Réinitialiser les variables de session."""
+        self.database.save()
         self.logged_in = False
         self.user = None
-        if methods.confirm("quitter le programme"): return methods.clear_terminal(), methods.console("green", "[✔] Succès : Vous avez quitté l'application.")
+
+        self.database = Database(self)
+        self.security = Security(self)
+
+        self.auth = Authentification(self)
+        self.terminal = None
+
+    def quit(self):
+        """→ Quitter l'application."""
+        if methods.confirm("quitter le programme"):
+            self.reset()
+            methods.clear_terminal(),
+            methods.console("green", "[✔] Succès : Vous avez quitté l'application.")
+            return exit(0)
         else: return self.auth.choice()
+
 
 def ask_options():
     options = ["Accéder au terminal", "Définir les réglages", "Se déconnecter"]

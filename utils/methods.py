@@ -5,95 +5,97 @@ import requests
 
 from utils.configuration import style
 
-def console(arg: str, text: str, mode: str = "colors", action = print):
+
+def console(arg: str, text: str, mode: str = "colors", action=print):
+    """→ Afficher du texte stylé dans la console."""
     return action(f"{style[mode][arg]}{text}{style["reset"]}")
 
-# Nettoyer le terminal utilisateur
+
 def clear_terminal():
+    """→ Nettoyer le terminal utilisateur."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Attendre que l'utilisateur clique pour démarrer
+
 def pending_load():
+    """→ Attendre que l'utilisateur clique pour démarrer."""
     return console("cyan", "\n→ Appuyez sur ENTER pour vous connecter...", "colors", input)
 
-# Récupérer le prochain incrément d'une liste
+
 def auto_increment(data: list) -> int:
+    """→ Récupérer le prochain incrément d'une liste."""
     if len(data) == 0: return 1
     index = len(data) - 1
     increment = data[index]["id"] + 1
     return increment
 
-# Demander confirmation avant une autre action
-def confirm(confirmation:str) -> bool:
+
+def confirm(confirmation: str) -> bool:
+    """→ Confirmation de l'utilisateur."""
     while True:
         confirm = console("yellow", f"[🛈] Voulez-vous vraiment {confirmation} ? [Oui/Non]\n→ ", "colors", input)
         if confirm.lower().strip() in ["oui", "non"]: return True if confirm.lower() == "oui" else False
 
 
-# Étoiles à la place de la saisie lors de l'input - By ChatGPT
-def secure_input(input: str):
+def secure_input(prompt: str):
+    """→ Saisie sécurisée de l'utilisateur."""
+    sys.stdout.write(prompt)
+    sys.stdout.flush()
+    password = ""
+
     if os.name == 'nt':  # Windows
         import msvcrt
-        sys.stdout.write(input)
-        sys.stdout.flush()
-        password = ""
         while True:
             char = msvcrt.getch()
-            if char in {b'\r', b'\n'}:  # Enter key
+            if char in {b'\r', b'\n'}:
                 break
-            elif char == b'\x08':  # Backspace
-                if len(password) > 0:
-                    password = password[:-1]
-                    sys.stdout.write('\b \b')
-                    sys.stdout.flush()
+            elif char == b'\x08' and password:
+                password = password[:-1]
+                sys.stdout.write('\b \b')
             else:
                 password += char.decode('utf-8')
                 sys.stdout.write("*")
-                sys.stdout.flush()
-        sys.stdout.write("\n")
-        return password
+            sys.stdout.flush()
     else:  # Unix/Linux/MacOS
-        import termios
-        import tty
-        sys.stdout.write(input)
-        sys.stdout.flush()
-        password = ""
+        import termios, tty
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
         try:
             tty.setraw(fd)
             while True:
                 char = sys.stdin.read(1)
-                if char == '\n' or char == '\r':  # Gérer Entrée correctement
+                if char in {'\n', '\r'}:
                     break
-                elif char == '\x7f':  # Backspace
-                    if len(password) > 0:
-                        password = password[:-1]
-                        sys.stdout.write('\b \b')  # Supprime une étoile
-                        sys.stdout.flush()
+                elif char == '\x7f' and password:
+                    password = password[:-1]
+                    sys.stdout.write('\b \b')
                 else:
                     password += char
-                    sys.stdout.write("*")  # Affiche une étoile
-                    sys.stdout.flush()
+                    sys.stdout.write("*")
+                sys.stdout.flush()
         finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)  # Réinitialise les paramètres
-        sys.stdout.write("\n")
-        return password
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
-# Générer un mot aléatoire
+    sys.stdout.write("\n")
+    return password
+
+
 def get_random_word(size):
+    """→ Générer un mot aléatoire."""
     response = requests.get(f"https://trouve-mot.fr/api/size/{size}")
     response = response.json()
     return response[0]["name"]
 
+
 def get_random_caps(word):
+    """→ Générer un mot avec des majuscules aléatoires."""
     response = ""
     for char in word:
         response += char.upper() if random.choice([True, False]) else char.lower()
     return response
 
-# Test de nombre premier de Miller-Rabin
+
 def is_prime(n, k=5):
+    """→ Test de primalité de Miller-Rabin."""
     if n == 2 or n == 3: return True  # 2 et 3 sont premiers
     if n == 1 or n % 2 == 0: return False  # 1 et les nombres pairs sont non premiers
 
@@ -115,14 +117,10 @@ def is_prime(n, k=5):
             return False  # n n'est pas premier
     return True
 
-# Générer un nombre premier
+
 def generate_prime(bits):
+    """→ Générer un nombre premier aléatoire."""
     while True:
         num = random.getrandbits(bits)
         if num % 2 == 0: num += 1
         if is_prime(num): return num
-
-
-
-
-

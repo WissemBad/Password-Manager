@@ -9,6 +9,7 @@ class Decryption:
         self.security = instance
 
     def CESAR(self, pwd: str):
+        """→ Déchiffrer avec la méthode de César."""
         response = ""
         for char in pwd:
             if char in configuration.characters["alphabet"]:
@@ -29,6 +30,7 @@ class Decryption:
         return response
 
     def AES(self, encrypted: bytes, vector: str, salt: str):
+        """→ Déchiffrer avec la méthode AES."""
         salt = base64.b64decode(salt)
         cipher = AES.new(self.security.manager.aes_load_key(), AES.MODE_CBC, vector)
 
@@ -38,6 +40,7 @@ class Decryption:
 
     @staticmethod
     def RSA(encrypted: int, private_key):
+        """→ Déchiffrer avec la méthode RSA."""
         d_bytes, n_bytes = base64.b64decode(private_key[0]), base64.b64decode(private_key[1])
         d, n = int.from_bytes(d_bytes, byteorder='big'), int.from_bytes(n_bytes, byteorder='big')
 
@@ -48,6 +51,8 @@ class Decryption:
         except UnicodeDecodeError: return False
         return decrypted_message
 
-    def custom(self):
+    @staticmethod
+    def custom():
+        """→ Déchiffrer avec une méthode personnalisée."""
         return True
 

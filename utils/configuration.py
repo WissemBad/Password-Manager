@@ -1,27 +1,40 @@
-# 0: JSON  -  1: SQL #
+# ================================
+# Configuration du programme
+# ================================
+
+# → Mode de base de données
+#    0: JSON | 1: SQLITE
 database_mode = 0
 
+# → Paramètres de sécurité
 security = {
-    "aes_global_key_size": 256,
-    "rsa_global_key_size": 8192,
+    "aes_master_key_size": 256,     # Taille de la clé AES maître (en bits)
+    "rsa_master_key_size": 8192,    # Taille de la clé RSA maître (en bits)
 
-    "aes_standard_key_size": 256,
-    "rsa_standard_key_size": 2048
+    "aes_standard_key_size": 256,   # Taille de la clé AES standard (en bits)
+    "rsa_standard_key_size": 2048   # Taille de la clé RSA standard (en bits)
 }
 
+# → Caractères autorisés pour les mots de passe
 characters = {
     "special": [
-        "!", "@", "#", "$", "€", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+",
-        "[", "]", "{", "}", "|", "\\", ":", ";", "'", '"', "<", ">", ",", ".",
-        "?", "/", "~", "`"
+        "!", "@", "#", "$", "€", "%", "^", "&", "*", "(", ")", "-", "_", "=",
+        "+", "[", "]", "{", "}", "|", "\\", ":", ";", "'", '"', "<", ">", ",",
+        ".", "?", "/", "~", "`"
     ],
-    "numbers": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    "alphabet": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
-    "ALPHABET": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+    "numbers": [str(i) for i in range(10)],         # Chiffres de 0 à 9
+    "alphabet": [chr(i) for i in range(97, 123)],   # Lettres minuscules a-z
+    "ALPHABET": [chr(i) for i in range(65, 91)]     # Lettres majuscules A-Z
 }
+# → Combinaison de tous les caractères autorisés
+characters["allowed"] = (
+    characters["alphabet"] +
+    characters["ALPHABET"] +
+    characters["special"] +
+    characters["numbers"]
+)
 
-characters["allowed"] = characters["alphabet"] + characters["ALPHABET"] + characters["special"] + characters["numbers"]
-
+# → Styles pour la console
 style = {
     "reset": "\033[0m",
     "styles": {
@@ -81,36 +94,40 @@ style = {
     }
 }
 
-
+# → Modèle de base de données par défaut
 template = {
     "database": {
-        "utilisateur": [],
-        "credentials": [],
-        "label": []
+        "utilisateur": [],  # Liste des utilisateurs
+        "credentials": [],  # Liste des identifiants
+        "label": []         # Liste des labels
     },
 
+    # → Exemple d'utilisateur
     "user": {
         "id": 1,
         "username": "admin",
         "password": "hashed_password",
-        "vector": "unique_vector"
+        "rsa_public_key": "public_key",
+        "rsa_private_key": "encrypted_private_key"
     },
 
+    # → Exemple d'identifiant
     "credentials": {
         "id": 1,
-        "user_id": 1,
+        "user_id": 1,  # Référence vers l'utilisateur
         "website": "example.com",
         "login": "admin",
         "password": "hashed_password",
-        "strength": 4,
-        "is_expired": False,
-        "encryption_type": "", # AES, RSA, CESAR
-        "encryption_key": "", # AES: Salt
+        "strength": 4,  # Note de robustesse
+        "is_expired": False,    # Expiration (Historique)
+        "encryption_type": "",  # AES, RSA, CESAR
+        "encryption_key": ""    # AES: Salt
     },
 
+    # → Exemple de label
     "label": {
         "id": 1,
         "text": "Important",
-        "credentials_id": 1
+        "credentials_id": [1, 2, 3]  # Identifiants liés à ce label
     }
 }

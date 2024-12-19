@@ -1,8 +1,10 @@
-import random
 import sys
 import time
+import random
+
 
 def starting_app():
+    """→ Affiche le message de démarrage de l'application."""
     print("")
     print("╔═════════════════════════════════════╗")
     print("║       \033[1m\033[94mBienvenue sur UNCRACKED\033[0m       ║")
@@ -10,7 +12,9 @@ def starting_app():
     print("║       → Réalisé par Wissem B.       ║")
     print("╚═════════════════════════════════════╝")
 
+
 def loading_app(min_speed, max_speed, wait_time=1):
+    """→ Affiche une barre de chargement."""
     progress = 0
     while progress < 100:
         increment = random.randint(1, 5)
@@ -23,6 +27,7 @@ def loading_app(min_speed, max_speed, wait_time=1):
 
 
 def menu_auth(pending):
+    """→ Affiche le menu d'authentification."""
     print("╔════════════════════════════════╗")
     print("║        \033[1mAUTHENTIFICATION\033[0m        ║")
     print("║    Sélectionner une action :   ║")
@@ -30,7 +35,9 @@ def menu_auth(pending):
     pending()
     print("══════════════════════════════════")
 
+
 def menu_login(pending):
+    """→ Affiche le menu de connexion."""
     print("╔════════════════════════════════╗")
     print("║           \033[1mCONNEXION\033[0m            ║")
     print("║    Entrez vos identifiants :   ║")
@@ -39,7 +46,9 @@ def menu_login(pending):
     print("══════════════════════════════════")
     return response
 
+
 def menu_register(pending):
+    """→ Affiche le menu d'enregistrement."""
     print("╔════════════════════════════════╗")
     print("║       \033[1mCRÉATION DE COMPTE\033[0m       ║")
     print("║    Entrez vos informations :   ║")
@@ -49,8 +58,8 @@ def menu_register(pending):
     return response
 
 
-
 def menu_main(pending):
+    """→ Affiche le menu principal."""
     print("╔════════════════════════════════╗")
     print("║        \033[1mMENU PRINCIPAL\033[0m          ║")
     print("║   Que souhaitez-vous faire ?   ║")
@@ -58,7 +67,9 @@ def menu_main(pending):
     pending()
     print("══════════════════════════════════")
 
+
 def menu_terminal():
+    """→ Affiche le menu du terminal."""
     print("╔════════════════════════════════════╗")
     print("║        \033[1mTERMINAL DE COMMANDE\033[0m        ║")
     print("║    Entrez une ligne de commande    ║")
@@ -68,18 +79,24 @@ def menu_terminal():
     print("╚════════════════════════════════════╝")
 
 
+def help_specific():
+    """→ Affiche l'aide spécifique."""
+    print("╔════════════════════════════════════╗")
+    print("║             \033[1mMENU D'AIDE\033[0m            ║")
+    print("║     Description des commandes :    ║")
+    print("╚════════════════════════════════════╝")
 
 
-def mode_selection(data):
-    print("╔════════════════════════════════╗")
-    print("║          MODE DE JEU           ║")
-    print("║  Sélectionnez le mode de jeu   ║")
-    print("╚════════════════════════════════╝")
-    for i, option in enumerate(data):
-        print(f"{i}: {option}")
-    print("══════════════════════════════════")
+def help_global():
+    """→ Affiche l'aide générale."""
+    print("╔════════════════════════════════════╗")
+    print("║             \033[1mMENU D'AIDE\033[0m            ║")
+    print("║  Voici les commandes existantes :  ║")
+    print("╚════════════════════════════════════╝")
+
 
 def settings_menu():
+    """→ Affiche le menu des paramètres."""
     print("╔════════════════════════════════╗")
     print("║           PARAMÈTRES           ║")
     print("║     Définissez vos réglages    ║")
