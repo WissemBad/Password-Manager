@@ -3,7 +3,7 @@ import time
 from utils import ui
 from utils import methods
 
-from app.user import User
+from application.user import User
 
 class Authentification:
     def __init__(self, app):
@@ -38,11 +38,11 @@ class Authentification:
         methods.clear_terminal()
         username, password = ui.menu_login(ask_login)
         user = User(username, password, self.app)
-        if user.login():
+        if user.login(password):
             self.app.logged_in = True
             self.app.user = user
             methods.console("green", "[✔] Succès :  Connexion établie !")
-            methods.console("bright_yellow", f"[🛈] Info : Redirection vers le menu principal...")
+            methods.console("bright_yellow", f"[ί] Info : Redirection vers le menu principal...")
             time.sleep(1.8)
             return self.app.after_connect()
         else:
@@ -74,8 +74,8 @@ class Authentification:
             methods.console("red", f"[✘] Erreur : Le nom d'utilisateur est déjà utilisé.")
             return time.sleep(1.5), self.register(repeat) if not repeat else self.choice()
 
-    # → Déconnexion de l'application
     def logout(self):
+        """→ Déconnexion de l'application."""
         methods.clear_terminal()
         methods.console("green", f"[✔] Succès : Déconnexion effectuée !\n→ Vos données ont été correctement enregistrées.\n")
         self.app.logged_in = False

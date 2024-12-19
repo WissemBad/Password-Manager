@@ -6,7 +6,7 @@ from database.user import DataUser
 from database.credentials import DataCredentials
 
 match configuration.database_mode:
-    case 0: # DATABASE MODE : JSON
+    case 0: # - Mode [Database:JSON]
         class Database:
             database_location = "database/_data/database.json"
             template = configuration.template["database"]
@@ -22,7 +22,7 @@ match configuration.database_mode:
             def init_dependencies(self):
                 """→ Initialiser les dépendances de l'utilisateur."""
                 self.credentials = DataCredentials(self)
-                self.label = None
+                # self.label = DataLabel(self)
 
             def generate(self):
                 """→ Générer la base de données."""
@@ -92,6 +92,6 @@ match configuration.database_mode:
                         self.complete[location].remove(element)
                         return self.save()
                 return None
-    case 1:
+    case 1: # - Mode [Database:SQL]
         raise Exception("[!] Le mode [Database:SQL] n'est pas encore implémenté.")
 
