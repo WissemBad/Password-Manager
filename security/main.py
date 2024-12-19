@@ -16,24 +16,23 @@ class Security:
         self.app = app
         self.manager = KeyManager()
 
-        self.hasher = None
+        self.hasher = Hasher()
         self.encrypt = None
         self.decrypt = None
 
     def init_dependencies(self):
-        """Initialiser les dépendances de sécurité."""
-        self.hasher = Hasher(self)
+        """→ Initialiser les dépendances de sécurité."""
         self.encrypt = Encryption(self)
         self.decrypt = Decryption(self)
 
     @staticmethod
     def get_aes_vector(password: str):
-        """Obtenir un vecteur dérivé du mot de passe pour le chiffrement AES."""
+        """→ Obtenir un vecteur dérivé du mot de passe pour le chiffrement AES."""
         derived = PBKDF2(password, b'', count=1000000)
         return derived[:AES.block_size]
 
     def generate_rsa_keys(self, key_size):
-        """Générer une paire de clés RSA."""
+        """→ Générer une paire de clés RSA."""
         bits = key_size // 2
         p = generate_prime(bits)
         q = generate_prime(bits)
@@ -56,7 +55,6 @@ class Security:
 
         public_key = [base64.b64encode(e_bytes).decode('utf-8'), base64.b64encode(n_bytes).decode('utf-8')]
         private_key = [base64.b64encode(private_encryption[0]).decode('utf-8'), base64.b64encode(private_encryption[1]).decode('utf-8')]
-
         return public_key, private_key
 
 
