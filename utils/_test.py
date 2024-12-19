@@ -1,7 +1,7 @@
 import base64
-from app.application import App
+from app.main import Application
 
-Application = App()
+Application = Application()
 
 public, private = Application.security.generate_rsa_keys(2048)
 message = "WissemLPlusBeau"
