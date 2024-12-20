@@ -12,8 +12,15 @@ class DataCredentials:
 
     def exists(self, id: int):
         """→ Vérifier si des données existent."""
-        request = self.database.get("credentials", "id", id)
-        return request is not None
+        return self.database.get("credentials", "id", id) is not None
+
+    def get_by_id(self, id: int):
+        """→ Récupérer des données par ID."""
+        return self.database.get("credentials", "id", id)
+
+    def delete(self, id: int):
+        """→ Supprimer des données de la base de données."""
+        return self.database.delete("credentials", "id", id)
 
     def get_user_credentials(self, user_id: int):
         """→ Récupérer les données d'un utilisateur."""
