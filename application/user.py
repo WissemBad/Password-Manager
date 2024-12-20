@@ -16,6 +16,7 @@ class User:
         self.aes_encryption_key = self.app.security.get_aes_vector(password)
         self.rsa_public_key = None
         self.rsa_private_key = None
+        self.safety_auth = False
 
     def init_dependencies(self):
         """→ Initialiser les dépendances de l'utilisateur."""
@@ -44,6 +45,7 @@ class User:
 
         if not head["id"] == self.id: return False
         return self.app.security.hasher.verify(head["password"], password)
+
 
     def logout(self):
         """→ Déconnexion de l'utilisateur"""

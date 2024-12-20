@@ -11,7 +11,7 @@ class HelpCommand:
             ("help", "Afficher la liste des commandes existantes.", "help [<command>] [<subcommand>]"),
             ("exit", "Sortie du terminal et retour au menu principal.", "exit"),
             ("quit", "Quitter le gestionnaire et déconnexion de l'application.", "quit"),
-            ("clear","Nettoyer ke terminal de l'application", "clear"),
+            ("clear","Nettoyer le terminal de l'application", "clear"),
             ("credentials", "Gestion des mots de passe dans l'application.", "credentials --options")
         )
 
