@@ -1,3 +1,5 @@
+import time
+
 from utils import methods
 from application.credentials import Credentials
 
@@ -11,11 +13,11 @@ class CredentialsCommand:
     def handle(self):
         match self.arguments["subcommand"]:
             case "add": self.add()
-            case "remove": self.remove(self.arguments)
-            case "edit": self.edit(self.arguments)
-            case "show": self.show(self.arguments)
-            case "list": self.list_entries(self.arguments)
-            case "audit": self.audit(self.arguments)
+            case "remove": self.remove()
+            case "edit": self.edit()
+            case "show": self.show()
+            case "list": self.list_entries()
+            case "audit": self.audit()
             # case "history": self.history(self.arguments)
             # case "generate": self.generate(self.arguments)
             case _: self.instance.help("credentials")
@@ -51,19 +53,24 @@ class CredentialsCommand:
             return self.instance.help("credentials", "add")
 
         credential = Credentials(self.instance.app, **data)
-        if credential.create(): methods.console("green", "[✔] Succès : Vos credentials ont été enregistrés avec succès.")
-        else: methods.console("bright_red", "[✘] Erreur : Une erreur s'est produite lors de l'enregistrement de vos credentials.")
+        if credential.create(): methods.console("green", "[✔] Succès : Votre credentials a été enregistré avec succès.")
+        else: methods.console("bright_red", "[✘] Erreur : Une erreur s'est produite lors de l'enregistrement de votre credentials.")
         return self.instance.command()
 
-    def remove(self, args):
+    def remove(self):
         """Logique associée à la commande 'remove'."""
-        required_args = ["id"]
-        missing_args = [arg for arg in required_args if arg not in self.arguments["args"].keys()]
-        if missing_args:
-            methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) : {', '.join(missing_args)}")
-            self.instance.help("credentials", "remove")
+        try: id = int(next(iter(self.arguments["args"])))
+        except ValueError:
+            methods.console("bright_red",f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) ou incorrect : <id>")
+            return self.instance.help("credentials", "remove")
 
-        print(f"Suppression de l'entrée {args.id}.")
+        credential = Credentials(self.instance.app, id=id)
+        if not credential.exists: methods.console("bright_red", "[✘] Erreur : Aucun credentials trouvé pour l'ID fourni."); return self.instance.command()
+        if not credential.user_id == self.instance.app.user.id: methods.console("bright_red", "[✘] Erreur : Vous n'êtes pas autorisé à supprimer ce credentials."); return self.instance.command()
+
+        if credential.delete(): methods.console("green", "[✔] Succès : Votre credentials a été supprimé avec succès.")
+        else: methods.console("bright_red", "[✘] Erreur : Une erreur s'est produite lors de la suppression de votre credential.")
+        return self.instance.command()
 
     def edit(self, args):
         """Logique associée à la commande 'edit'."""
