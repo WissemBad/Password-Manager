@@ -36,6 +36,7 @@ class Authentification:
         if user.login(password):
             self.app.logged_in = True
             self.app.user = user
+            self.app.user.safety_auth = True
             methods.console("green", "[✔] Succès :  Connexion établie !")
             methods.console("bright_yellow", f"[ί] Info : Redirection vers le menu principal...")
             time.sleep(1.8)
@@ -62,6 +63,7 @@ class Authentification:
             methods.console("green", f"[✔] Succès : Votre compte [{username}] a été créé !")
             self.app.logged_in = True
             self.app.user = user
+            self.app.user.safety_auth = True
             methods.console("bright_yellow", f"[ί] Info : Redirection vers le menu principal dans 3s...")
             time.sleep(1.8)
             return self.app.after_connect()

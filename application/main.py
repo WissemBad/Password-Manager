@@ -34,10 +34,12 @@ class Application:
 
     def init_dependencies(self):
         """→ Initialiser les dépendances de l'application."""
+        if not self.logged_in or not self.user.safety_auth:
+            return methods.console("bright_red", "[✘] Erreur de sécurité : Tentative de connexion interdite interceptée."), exit(0)
         self.terminal = Terminal(self)
         self.database.init_dependencies()
         self.security.init_dependencies()
-        self.user.init_dependencies(self.user.pwd)
+        self.user.init_dependencies()
 
     def after_connect(self):
         """→ Menu principal après connexion."""

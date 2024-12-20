@@ -30,7 +30,7 @@ if __name__ == "__main__":
     if not os.path.exists(".env"): Application.security.manager.initialize_security()
 
     # Lancer l'application
-    Application.user = User("wissem", "Wissem", Application)
+    Application.user = User("wissem", "Cissem", Application)
     Application.after_connect()
 
     # Application.init_dependencies()
