@@ -28,7 +28,6 @@ class Security:
     @staticmethod
     def get_aes_vector(password: str):
         """→ Obtenir un vecteur dérivé du mot de passe pour le chiffrement AES."""
-        print(password)
         derived = PBKDF2(password, b'', count=1000000)
         return derived[:AES.block_size]
 
