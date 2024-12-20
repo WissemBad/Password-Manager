@@ -25,6 +25,9 @@ match configuration.database_mode:
 
             def generate(self):
                 """→ Générer la base de données."""
+                directory = os.path.dirname(self.database_location)
+                if not os.path.exists(directory): os.makedirs(directory)
+
                 with open(self.database_location, "w", encoding="utf-8") as file:
                     json.dump(self.template, file, indent=4, ensure_ascii=False)
                 return self.load()
