@@ -16,10 +16,10 @@ class CredentialsCommand:
             case "remove": self.remove()
             case "edit": self.edit()
             case "show": self.show()
-            case "list": self.list_entries()
+            case "list": self.list()
             case "audit": self.audit()
             # case "history": self.history(self.arguments)
-            # case "generate": self.generate(self.arguments)
+            case "generate": self.generate()
             case _: self.instance.help("credentials")
 
     def add(self):
@@ -81,9 +81,12 @@ class CredentialsCommand:
         """Logique associée à la commande 'show'."""
         print(f"Affichage de l'entrée {args.id}.")
 
-    def list_entries(self, args):
+    def list(self, args):
         """Logique associée à la commande 'list'."""
         print(f"Liste des entrées avec filtre par label : {args.label}.")
+
+    def generate(self):
+        return True
 
     def audit(self, args):
         """Logique associée à la commande 'audit'."""
