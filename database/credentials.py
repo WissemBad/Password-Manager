@@ -1,63 +1,121 @@
 from application.credentials import Credentials
+from database.main import Database
 from utils import methods
 
 
 class DataCredentials:
-    def __init__(self, database):
-        self.database = database
+    def __init__(self, database: Database) -> None:
+        self.database: Database = database
         self.user = self.database.app.user
+        self.data: list[dict] = self.database.complete["credentials"]
+        self.user_credentials: list[dict] = self.get_user_credentials(self.user.id)
 
-        self.data = self.database.complete["credentials"]
-        self.dataCredentials = self.get_user_credentials(self.user.id)
 
-    def exists(self, id: int):
-        """→ Vérifier si des données existent."""
+    def exists(self, id: int) -> bool:
+        """
+        → Vérifier si des données existent dans la base de données.
+        :param id: L'identifiant des données à vérifier.
+        :return: True si les données existent, False sinon.
+        """
         return self.database.get("credentials", "id", id) is not None
 
-    def get_by_id(self, id: int):
-        """→ Récupérer des données par ID."""
+
+    def get_by_id(self, id: int) -> dict | None:
+        """
+        → Récupérer des données par ID.
+        :param id: L'identifiant des données à récupérer.
+        :return: Un dictionnaire contenant les données, ou None si non trouvé.
+        """
         return self.database.get("credentials", "id", id)
 
-    def delete(self, id: int):
-        """→ Supprimer des données de la base de données."""
+
+    def delete(self, id: int) -> bool:
+        """
+        → Supprimer des données de la base de données.
+        :param id: L'identifiant des données à supprimer.
+        :return: True si la suppression a réussi, False sinon.
+        """
         return self.database.delete("credentials", "id", id)
 
-    def get_user_credentials(self, user_id: int):
-        """→ Récupérer les données d'un utilisateur."""
-        response = []
+
+    def get_user_credentials(self, user_id: int) -> list[dict]:
+        """
+        → Récupérer les données d'un utilisateur.
+        :param user_id: L'identifiant de l'utilisateur.
+        :return: Une liste de dictionnaires contenant les données de l'utilisateur.
+        """
+        response: list[dict] = []
         for element in self.data:
-            if element["user_id"] == user_id: response.append(element)
+            if element["user_id"] == user_id:
+                response.append(element)
         return response
 
-    def edit(self, id: int, data: dict):
-        """→ Modifier des données dans la base de données."""
-        for element in self.data:
-            if element["id"] == id:
-                element.update(data)
-                element["history"].insert(0, generate_history(data))
-                return self.database.save()
-        return False
 
-    def create(self, credentials:Credentials):
-        """→ Ajouter des données à la base de données."""
-        data = {
+    def update(self, credentials: Credentials) -> bool:
+        """
+        → Mettre à jour des données dans la base de données.
+        :param credentials: Les informations d'identification à mettre à jour.
+        :return: True si la mise à jour a réussi, False sinon.
+        """
+        data: dict = {
             "id": credentials.id,
             "user_id": credentials.user_id,
             "website": credentials.website,
             "login": credentials.login,
             "password": credentials.password.encrypted,
             "strength": credentials.password.strength,
-            "encryption_type": credentials.password.encryption_type,    # (AES, RSA, CESAR)
-            "encryption_key": credentials.password.encryption_key, # (AES: Salt, CESAR: Key)
+            "encryption_type": credentials.password.encryption_type,
+            "encryption_key": credentials.password.encryption_key,
             "labels": credentials.labels,
+            "updated_at": methods.get_current_time(),
+            "created_at": credentials.created_at,
+            "history": credentials.history,
+        }
+
+        for element in self.data:
+            if element["id"] == credentials.id:
+                old: dict = element.copy()
+                element.update(data)
+                if not old["password"] == element["password"] or \
+                   not old["strength"] == element["strength"] or \
+                   not old["encryption_type"] == element["encryption_type"] or \
+                   not old["encryption_key"] == element["encryption_key"] or \
+                   not old["website"] == element["website"] or \
+                   not old["login"] == element["login"]:
+                    element["history"].insert(0, generate_history(old))
+                return self.database.save()
+        return False
+
+
+    def create(self, credentials: Credentials) -> bool:
+        """
+        → Ajouter des données à la base de données.
+        :param credentials: Les informations d'identification à ajouter.
+        :return: True si l'ajout a réussi, False sinon.
+        """
+        data: dict = {
+            "id": credentials.id,
+            "user_id": credentials.user_id,
+            "website": credentials.website,
+            "login": credentials.login,
+            "password": credentials.password.encrypted,
+            "strength": credentials.password.strength,
+            "encryption_type": credentials.password.encryption_type,
+            "encryption_key": credentials.password.encryption_key,
+            "labels": credentials.labels,
+            "updated_at": methods.get_current_time(),
             "created_at": methods.get_current_time(),
-            "history": []
+            "history": [],
         }
         return self.database.add("credentials", data)
 
 
-def generate_history(data):
-    """→ Générer l'historique des mots de passe."""
+def generate_history(data: dict) -> dict:
+    """
+    → Générer l'historique des mots de passe.
+    :param data: Les données à inclure dans l'historique.
+    :return: Un dictionnaire contenant l'historique des mots de passe.
+    """
     return {
         "website": data["website"],
         "login": data["login"],
@@ -65,5 +123,5 @@ def generate_history(data):
         "strength": data["strength"],
         "encryption_type": data["encryption_type"],
         "encryption_key": data["encryption_key"],
-        "created_at": data["created_at"]
+        "updated_at": data["updated_at"],
     }
