@@ -188,6 +188,7 @@ Bien que l'application ait été rigoureusement testée, certains **bugs mineurs
 - **Performances** : Les opérations complexes (comme le chiffrement et les recherches avancées) peuvent entraîner des ralentissements pour de grandes bases de données ou des critères multiples.
 - **Corruption des données** : Des éditions successives peuvent, dans de rares cas, corrompre un mot de passe.
 - **Recherche multicritères** : Les recherches impliquant plusieurs critères peuvent parfois dysfonctionner.
+- **Édition de mots de passe :** Les éditions de mots de passe encryptés avec une clé César personnalisée semblent disfonctionner. *(Découverte de dernière minute.)*
 
 ### Notes
 - **Génération de mots du dictionnaire** : L'application utilise des **API externes** pour générer des mots du dictionnaire aléatoires avec des critères spécifiques.

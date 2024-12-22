@@ -159,8 +159,7 @@ class Credentials:
         try:
             methods.password_audit(self.password.decrypted)
             return True
-        except:
-            return False
+        except:  return False
 
 
     def show_history(self, ID: int, crypt: bool = True) -> bool:
