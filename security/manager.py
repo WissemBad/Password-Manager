@@ -3,9 +3,9 @@ import base64
 import random
 import time
 
-from dotenv import load_dotenv
 from utils.methods import console
 from utils import configuration
+from dotenv import load_dotenv
 
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Random import get_random_bytes
@@ -20,58 +20,96 @@ class KeyManager:
     csr_directory = "security/keys/encrypted_csr.key"
 
     if os.path.exists('.env'):
-        load_dotenv() # Charger les variables d'environnement
+        load_dotenv()  # Charger les variables d'environnement
         aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
         rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))
         rsa_private_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PRIVATE_KEY")))
 
-    def double_encrypt(self, key, user_vector=None):
-        """→ Chiffrer doublement avec la clé AES et publique RSA."""
+
+    def double_encrypt(self, key: bytes, user_vector: bytes = None) -> bytes:
+        """
+        → Chiffrer doublement avec la clé AES et publique RSA.
+        :param key: La clé à chiffrer.
+        :param user_vector: Un vecteur d'initialisation pour AES (optionnel).
+        :return: La clé chiffrée avec AES et RSA.
+        """
         encrypted_key = PKCS1_OAEP.new(self.rsa_public_key).encrypt(key)
-        if user_vector is None: doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_ECB).encrypt(pad(encrypted_key, AES.block_size))
-        else: doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_CBC, user_vector).encrypt(pad(encrypted_key, AES.block_size))
+        if user_vector is None:
+            doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_ECB).encrypt(pad(encrypted_key, AES.block_size))
+        else:
+            doubly_encrypted_key = AES.new(self.aes_global_key, AES.MODE_CBC, user_vector).encrypt(pad(encrypted_key, AES.block_size))
         return doubly_encrypted_key
 
-    def double_decrypt(self, doubly_encrypted_key, user_vector=None):
-        """→ Déchiffrer doublement avec la clé AES et privée RSA."""
-        if user_vector is None: encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_ECB).decrypt(doubly_encrypted_key), AES.block_size)
-        else: encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_CBC, user_vector).decrypt(doubly_encrypted_key), AES.block_size)
+
+    def double_decrypt(self, doubly_encrypted_key: bytes, user_vector: bytes = None) -> bytes:
+        """
+        → Déchiffrer doublement avec la clé AES et privée RSA.
+        :param doubly_encrypted_key: La clé doublement chiffrée à déchiffrer.
+        :param user_vector: Un vecteur d'initialisation pour AES (optionnel).
+        :return: La clé déchiffrée.
+        """
+        if user_vector is None:
+            encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_ECB).decrypt(doubly_encrypted_key), AES.block_size)
+        else:
+            encrypted_key = unpad(AES.new(self.aes_global_key, AES.MODE_CBC, user_vector).decrypt(doubly_encrypted_key), AES.block_size)
         key = PKCS1_OAEP.new(self.rsa_private_key).decrypt(encrypted_key)
         return key
 
-    def aes_key_generate(self):
-        """→ Générer une clé secrète AES et l'enregistrer dans un fichier."""
-        aes_key = get_random_bytes(int(self.aes_global_key_size/8))
+
+    def aes_key_generate(self) -> bytes:
+        """
+        → Générer une clé secrète AES et l'enregistrer dans un fichier.
+        :return: La clé AES générée.
+        """
+        aes_key = get_random_bytes(int(self.aes_global_key_size / 8))
         doubly_encrypted_aes_key = self.double_encrypt(aes_key)
 
         directory = os.path.dirname(self.aes_directory)
-        if not os.path.exists(directory): os.makedirs(directory)
-        with open(self.aes_directory, "wb") as key_file: key_file.write(doubly_encrypted_aes_key)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        with open(self.aes_directory, "wb") as key_file:
+            key_file.write(doubly_encrypted_aes_key)
         return aes_key
 
-    def aes_key_load(self):
-        """→ Charger la clé secrète AES."""
-        if not os.path.exists(self.aes_directory): return self.aes_key_generate()
+
+    def aes_key_load(self) -> bytes:
+        """
+        → Charger la clé secrète AES.
+        :return: La clé AES chargée.
+        """
+        if not os.path.exists(self.aes_directory):
+            return self.aes_key_generate()
 
         with open(self.aes_directory, "rb") as key_file:
             doubly_encrypted_aes_key = key_file.read()
 
         return self.double_decrypt(doubly_encrypted_aes_key)
 
-    def csr_key_generate(self):
-        """→ Générer une clé secrète César et l'enregistrer dans un fichier."""
+
+    def csr_key_generate(self) -> int:
+        """
+        → Générer une clé secrète César et l'enregistrer dans un fichier.
+        :return: La clé César générée sous forme d'entier.
+        """
         csr_key = random.randint(0, 25).to_bytes(1, byteorder='big')
         directory = os.path.dirname(self.csr_directory)
-        if not os.path.exists(directory): os.makedirs(directory)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
         doubly_encrypted_csr_key = self.double_encrypt(csr_key)
         directory = os.path.dirname(self.csr_directory)
-        if not os.path.exists(directory): os.makedirs(directory)
-        with open(self.csr_directory, "wb") as key_file: key_file.write(doubly_encrypted_csr_key)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        with open(self.csr_directory, "wb") as key_file:
+            key_file.write(doubly_encrypted_csr_key)
         return int.from_bytes(csr_key, byteorder='big') % 26
 
-    def csr_key_load(self):
-        """→ Charger la clé secrète César."""
+
+    def csr_key_load(self) -> int:
+        """
+        → Charger la clé secrète César.
+        :return: La clé César chargée.
+        """
         if not os.path.exists(self.csr_directory) or os.path.getsize(self.csr_directory) == 0:
             return self.csr_key_generate()
 
@@ -81,10 +119,14 @@ class KeyManager:
         csr_key = self.double_decrypt(doubly_encrypted_csr_key)
         return int.from_bytes(csr_key, byteorder='big') % 26
 
-    def initialize_security(self):
-        """→ Initialiser les clés RSA et AES pour l'application."""
+
+    def initialize_security(self) -> tuple:
+        """
+        → Initialiser les clés RSA et AES pour l'application.
+        :return: Un tuple avec un message de succès et un booléen indiquant le succès.
+        """
         console("yellow", "[🛈] Info : Initialisation des clés RSA et AES pour l'application...")
-        aes_key = get_random_bytes(int(self.aes_global_key_size/8))
+        aes_key = get_random_bytes(int(self.aes_global_key_size / 8))
         rsa_key = RSA.generate(self.rsa_global_key_size)
 
         private_key = rsa_key.export_key()
@@ -98,7 +140,8 @@ class KeyManager:
             env_file.write(f"AES_GLOBAL_KEY={aes_key_b64}\n")
             env_file.write(f"RSA_PUBLIC_KEY={public_key_b64}\n")
             env_file.write(f"RSA_PRIVATE_KEY={private_key_b64}\n")
-        console("green", "Les clés RSA et AES ont été générées avec succès."), load_dotenv()
+        console("green", "Les clés RSA et AES ont été générées avec succès.")
+        load_dotenv()
 
         self.aes_global_key = base64.b64decode(os.getenv("AES_GLOBAL_KEY"))
         self.rsa_public_key = RSA.import_key(base64.b64decode(os.getenv("RSA_PUBLIC_KEY")))

@@ -1,15 +1,24 @@
 import base64
-from utils import configuration as configuration
 
-from Crypto.Cipher import AES
+from security.main import Security
+from utils import configuration
+
 from Crypto.Util.Padding import unpad
+from Crypto.Cipher import AES
+
 
 class Decryption:
-    def __init__(self, instance):
-        self.security = instance
+    def __init__(self, instance: Security) -> None:
+        self.security: Security = instance
 
-    def CESAR(self, pwd: str, increment: int or None = None):
-        """→ Déchiffrer avec la méthode de César."""
+
+    def CESAR(self, pwd: str, increment: int | None = None) -> str:
+        """
+        → Déchiffrer avec la méthode de César.
+        :param pwd: Le mot de passe ou texte à déchiffrer.
+        :param increment: Le nombre de positions à décaler pour chaque caractère (par défaut, utilise la clé de César de l'instance).
+        :return: Le texte déchiffré.
+        """
         response = ""
         if increment is None: increment = self.security.manager.csr_key_load()
 
@@ -29,19 +38,31 @@ class Decryption:
             response += str(char)
         return response
 
-    def AES(self, encrypted: str, vector: str, salt: str):
-        """→ Déchiffrer avec la méthode AES."""
-        salt = base64.b64decode(salt.encode('utf-8'))
+
+    def AES(self, encrypted: str, vector: str, salt: str) -> str:
+        """
+        → Déchiffrer avec la méthode AES.
+        :param encrypted: Le texte chiffré en base64 à déchiffrer.
+        :param vector: Le vecteur d'initialisation (IV) utilisé pour AES.
+        :param salt: Le sel ajouté lors du chiffrement.
+        :return: Le texte déchiffré.
+        """
         encrypted = base64.b64decode(encrypted.encode('utf-8'))
         cipher = AES.new(self.security.manager.aes_key_load(), AES.MODE_CBC, vector)
 
         decrypted = unpad(cipher.decrypt(encrypted), AES.block_size)
-        decrypted = decrypted.decode('utf-8').removesuffix(salt.decode('utf-8'))
+        decrypted = decrypted.decode('utf-8').removesuffix(salt)
         return decrypted
 
+
     @staticmethod
-    def RSA(encrypted: int, private_key):
-        """→ Déchiffrer avec la méthode RSA."""
+    def RSA(encrypted: int, private_key: tuple[str, str]) -> str | bool:
+        """
+        → Déchiffrer avec la méthode RSA.
+        :param encrypted: Le texte chiffré à déchiffrer sous forme d'entier.
+        :param private_key: La clé privée utilisée pour déchiffrer (tuple contenant d et n en base64).
+        :return: Le message déchiffré en texte ou False en cas d'erreur.
+        """
         d_bytes, n_bytes = base64.b64decode(private_key[0]), base64.b64decode(private_key[1])
         d, n = int.from_bytes(d_bytes, byteorder='big'), int.from_bytes(n_bytes, byteorder='big')
 
@@ -51,9 +72,3 @@ class Decryption:
         try: decrypted_message = decrypted_bytes.decode('utf-8')
         except UnicodeDecodeError: return False
         return decrypted_message
-
-    @staticmethod
-    def custom():
-        """→ Déchiffrer avec une méthode personnalisée."""
-        return True
-
