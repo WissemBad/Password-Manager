@@ -98,14 +98,7 @@ def get_strength(password: str) -> int:
     return max(strength, 1)
 
 
-def generate_password(
-    length: int = 12,
-    use_mixed_case: bool = True,
-    use_numbers: bool = True,
-    use_specials: bool = True,
-    use_dictionary: bool = False,
-    strength: int = 3
-) -> tuple[bool, str | None]:
+def generate_password(length: int = 16, use_mixed_case: bool = True, use_numbers: bool = True, use_specials: bool = True, use_dictionary: bool = False, strength: int = 3) -> tuple[bool, str | None]:
     """
     → Génère un mot de passe aléatoire en fonction des critères donnés.
     :param length: Longueur du mot de passe.
@@ -119,23 +112,34 @@ def generate_password(
     character_pool = configuration.characters["alphabet"]
     password = ""
 
+    # Créer un registre de caractères en fonction des paramètres
     if use_mixed_case: character_pool += configuration.characters["ALPHABET"]
     if use_numbers: character_pool += configuration.characters["numbers"]
     if use_specials: character_pool += configuration.characters["special"]
     if not character_pool: return False, "Impossible de générer un mot de passe sans caractères."
 
+    # Générer un mot de passe aléatoire
     if use_dictionary: password = methods.get_random_word(length)
     else:
-        password = "".join(random.choice(character_pool) for _ in range(length))
-        if use_mixed_case: password = methods.get_random_caps(password)
+        for char in range(length): password += random.choice(character_pool)
+    if use_mixed_case: password = methods.get_random_caps(password)
 
     if strength == 1: return True, password
     if strength == 4 and not (use_numbers and use_specials and use_mixed_case and length >= 8): return False, "Impossible de générer un mot de passe avec la robustesse souhaitée."
 
+    # Vérifier et ajuster la robustesse si nécessaire
     for _ in range(50):
         if get_strength(password) >= strength: break
-        if use_numbers: password += random.choice(configuration.characters["numbers"])
-        if use_specials: password += random.choice(configuration.characters["special"])
-    else:
-        return False, "Impossible de générer un mot de passe avec la robustesse souhaitée."
+
+        if use_numbers:
+            add_char = random.choice(configuration.characters["numbers"]), random.choice(
+                configuration.characters["numbers"])
+            if random.choice([True, False]): password = password[:-2] + add_char[0] + add_char[1]
+            else: password = add_char[0] + password[1:-1] + add_char[1]
+
+        if use_specials:
+            add_char = random.choice(configuration.characters["special"])
+            if random.choice([True, False]): password = password + add_char
+            else: password = add_char + password
+    else: return False, "Impossible de générer un mot de passe avec la robustesse souhaitée."
     return True, password
