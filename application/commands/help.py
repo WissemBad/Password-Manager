@@ -57,8 +57,8 @@ class HelpCommand:
                     ),
                     "generate": (
                         "Génère un mot de passe sécurisé pour une nouvelle entrée.",
-                        "credentials generate [--length <number>] [--symbols] [--numbers] [--uppercase] [--lowercase]",
-                        "credentials generate --length 12 --symbols --numbers --uppercase"
+                        "credentials generate [--strength <1-4>] [--use_dictionary] [--no_numbers] [--no_mixed_case] [--length <length>]",
+                        "credentials generate --strength 4 --use_dictionary --no_numbers --no_specials --no_mixed_case --length 12"
                     )
                 }
             )
@@ -77,7 +77,7 @@ class HelpCommand:
         ui.help_global()
         for command in self.global_commands:
             print( f"  → \033[100;1m{command[0]}\033[0m : \033[3m{command[1]}\033[0m\n    \033[4mUsage :\033[0m \033[100m{command[2]}\033[0m\n")
-
+        return self.instance.command()
 
     def specific_help(self, main_command, sub_command=None):
         """→ Affiche l'aide spécifique."""
