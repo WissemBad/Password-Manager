@@ -31,6 +31,7 @@ class Application:
         methods.clear_terminal()
         ui.starting_app()
         methods.pending_load()
+        ui.loading_app(0.02, 0.1, 1)
         methods.clear_terminal()
         return self.auth.choice()
 
