@@ -1,0 +1,178 @@
+{
+    "utilisateur": [
+        {
+            "id": 1,
+            "username": "wissem",
+            "password": "$argon2id$v=19$m=65536,t=3,p=4$d170xELYFdkpPdYkesEtAg$Lh7s4QzEQO3WYF2Z8xZ4Yo7RWiZh2pOcJHO3b6M5tMY",
+            "rsa_public_key": [
+                "AQAB",
+                "P/XZRLFTGmYsYil2MsD+liBHd/1HLGx5AV3rQeyMwvbJDITiZajhsXemGt8pP56mnW/vuIMrnR7NF5nxDcnNfsYNBjk9yK+JqyJkxruTLCYc9rVKkpabLGgD0YAwTvxQmFl2wlaIdK8NVHHIlJWS7xYg20egKzy/n9LQ1Uulpo7mkPWnziIyiFjT6A3Wxr0I8llyQdcMdxvbQh8XcS4slJt5bm40aYRSepL7qsx/0VBEdcScUbawPnuyb57N6EqtOs6VwoIL56A2jU2u5jYKefJ6fDrYsOAcSxxck4qZ0vIMoFXnmQl5+eCWPdOMOagjdjZ4O8WFmjope4i9ADk5vQ=="
+            ],
+            "rsa_private_key": [
+                "9zJjVtmyR0cbmSj26kUhBytufKIs0ZEbjlKalbgYgHEWt77gCz0d9h90mw7nkUH5lCg8hegQPoTQLSuekyHXfl+7D1XyrWHAH52sC/fNX2NElsHwf2vH4s8MFUoxMcC3DWnn8SB55sNoDjNTiqt8EQb2NJc2N6SDPo156gvHSZcG37w8qaOZDPNdbFAylk1DXZ86PxxEhTIFoEU2M2tFe8DxhYkgkEwj/axuPFHl2t174BLvLQHAzqWAGc0N8ub7yym02PrdG7GifR1iDptpLhPUGKv32Q007gUop0zlDUKr+Yhwdk2K6wediQF+/FdvrKcz6XWfaTcPcj+4oU2Y8FyIMNJWih0YSM3n3G895W9vJYRhCiQxU7iVv+F/g0+KsCnaA9Yx///G8UVdUoD1d8jagtRxPt2GIXnF7w8mma++guv7LGFCUX4NHNyIsm+nkBGEIgxF2nKO/iBGFarL4RZeZpLD5k3wQlsBqlYvkMhJh+zlbMiwyMnV+CiXHQxsnq+yPi9602ou8IfMspbVis0CW5h1Ssk7VLVXim6K+mTNwUhL9SQeeHj0x4KTeLB77TdXzDXnnD2Y9b20SRCcMIHGY8BBQrMkwic6lqdj5w0pBssG+DsJtPMkVX7LC32ATM7cjn2JqXUfmTmAB06bwxzThrYN3OQJwAv22KuObRniS9qRhSNUvJTA7TqLodPdbtbd7KJno0tp3J2OLE2He/h1uBEBerZMDh524lEiw8mm+RkSKu+JHVSTYHGHuKZvfIkm4gZu8sr7SX6cyOYtqPyFInILf6ATctFCpFgsssNg1zFesFL0L5NEAErG6uyjSqeufDYmnBKwFv66SIYNXQ2TK/RGj02lBgWZLXN154QFtSy61WPC1pQJx/Mj37swLbae094cH4pQ3hDQP9nN9jUHerkju/lQJbH27t0FpNFnKqLu6ie23/+QeAtppv4zN3U0PbqDZnmYbkhyAt2CciGhE49L5W77RmVoQ9f3ri4UnjUMP/DFk9rtT+dDNaeJ8Xf8yUTYSDMkZZ8ed+rbQPXkQf1CMYHD401nQtN7OoWREjRQNe/Dty9sApY7RDMlmgkRiebKOak5QRTa/g7/uatG/9JYcb0drO+7niEz/uuu1Lb+7PnCffJE1d4QlsvSV6kBwuc2zOXVA2K3yiZ0HDtzzZCPcbd3l14pPX4+rmze54CFfvOK1idNfIFd4p55mdXvzylV6of4R7qEvZxl2lSt6BBA4x2US5IV5zvXV24bYFQ6e3PDn51pJpWjlXNNh+ZBSu08bMdKACs7RQHgkqh/ud+3OfYehzIwuOhWmxpxnjVYbh7xygqttrmEVLNpzRYt9qwEaca/kqYZK+UUKGVRO/04/K53OP/56Ci2dNo=",
+                "iROvUSVS+mF3RQSg6sBJMA6WvEkAolERtZnvx9BxlCPnRkNcFdpPrBuPsRErK6LLac5OagBKZAj6CQN8GR7pMO+KkhSwod+SfK4s5kW885ZKh00QGASU7qkVPWMWzoaXlLiwdmyumIoYassMOsyBKDxON6JDLvwLNkxzsR4EP13LYHUw3sj3tUpmgWqwP1PfzCMsd+s8NQg9UHmvX6qyT4A/9J2DSXiIdVo3RQ1FVkxrTZt6sw2zqWgYkXNMUpbD6wRLnXoOcE7HafJ4kJSIx8degdAp+IN2FTHn6G8XYXvG/F5tRuAUPL1xmrl2cQlFW9DjeD4nuqpsUkBBLCNXiEsVGvQDKFt7gaqmLZXn0nHNH0+Xn/bE/phK3NcFfMRRTSGLjcv+C9xCKLvqO/xFyp74V2fs2l5f/oU1qyvvrd8Zje8MdOmRechGy0aHbuaordjS/D342wKTWHWXIwYIhioF1FAdE5P5B6d6DayRAApg65aKpmnnByRpJdTfcMpy4KedWIYoLRSRCwsGCwyVCOEiMhxg9xj+WLxPn+pEAkbbyCkvK2/MqQ1V06quPhWK/u5hlKuus5xSzuHPI47gaRlR4WcoogoFZ3GaZBhd9Kp78Q1nuXTY1/CsyJU725T+4Oc4Ue0Hztdd7pEk4o1qCtyw91WxeqMPtMMpCUM1iRF4tOgHFM9roaa1Gu/BwL4730cKz9t2SquQuALmUHh1twMj2QKTiCXH63PIJBGCQbxQemN2SwpuV5VjCi5oAt4KGDBr01wHVYbrNGJJjvziNXMh7ejh8NJaM5KJKRZQlqB1F4jXcXggB/qfP+IUe0ChnJ+YcZRECew30pzbaBqmMaFiOTrxfvSv1IoCdF6ZdCXdY0KfUdeTTIQa4KmX1oK8Pa0sTAu5dhZ53ts0x7i8QafUC0rPbDhIQAt8Uril2NRvpwmJD0Ri944vBKq+JF9UdRnFsUCi2QszsShvZQnwSwpVzk1bOBzXpwP1HN/CmYkYJ0uLbxIGhNeBMooa18EDPAp9vsg+0JkHnxXVpI0clTmiLmVfvrx9f5Tc7g7aopGRkSsfL3f+oHAH0Fvp+ZvWPf3OXxRpiDBBG0PpfKlcngD5CMc/BYzfmP2uAOulItwC7w3FweqmbL+XAr7jLGWjZFUc23Usi3AMfpt/1Cy5ZQ5AHcTPTrFd0TJlHwvVVvqkOWzdKeLeKAT/fzuxePMuox7Wt/tGaf4Eo1xNcFseeusHsRWePq3FSCGcro4aSg9cqDiikRyeO/IcP5QPme6jkYb4S3K3lLxnSZCskN44ohLih79m0wFVk/iSxBq1x+girw6ia3aVeEJ2Yu0Ck69J7bIAJrAPYOJKgEda+NEwwm61sCanweLXLQdvKxrTFBk="
+            ]
+        }
+    ],
+    "credentials": [
+        {
+            "id": 1,
+            "user_id": 1,
+            "website": "solve-community.fr",
+            "login": "Wissem_Bad",
+            "password": "jDQMkI0GHrqdChmVDu1PPfFmtmM72M+MAvw1gf4A+Li/ez5eoJIKfGjPpg4OXsMq",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "/kOECDkkvoN+26SQQZbACg==",
+            "labels": [
+                "s",
+                "o",
+                "l",
+                "v",
+                "e"
+            ],
+            "updated_at": "2024-12-22 04:15:30",
+            "created_at": "2024-12-22 04:15:30",
+            "history": []
+        },
+        {
+            "id": 2,
+            "user_id": 1,
+            "website": "solve-community.fr",
+            "login": "Wissem_Bad",
+            "password": "1QGqNfzgJKWa15mbDq1KWR/waAaPGkwg0G7tNdbttBVXlFqpxhXU7aDIZhOJy7Pp",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "pOHNCR4uQlp+3NJT448lOw==",
+            "labels": [
+                "s",
+                "o",
+                "l",
+                "v",
+                "e"
+            ],
+            "updated_at": "2024-12-22 04:15:32",
+            "created_at": "2024-12-22 04:15:32",
+            "history": []
+        },
+        {
+            "id": 3,
+            "user_id": 1,
+            "website": "solve-community.fr",
+            "login": "Wissem_Bad",
+            "password": "XX4FPTg1uYwZnK54B+bAvlswbNXh6opBUjWK7jA96mopoa1cR2zZoATDfdDGTEE+",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "FoNHTo4+UG/yAq6bWgS5Lg==",
+            "labels": [
+                "s",
+                "o",
+                "l",
+                "v",
+                "e"
+            ],
+            "updated_at": "2024-12-22 04:15:32",
+            "created_at": "2024-12-22 04:15:32",
+            "history": []
+        },
+        {
+            "id": 4,
+            "user_id": 1,
+            "website": "aa",
+            "login": "aaa",
+            "password": 6444303057564709502811101965266875156840977885241817584967344602107312065457950442631320873989637826047242195815524954940490065843824418179151288867691636332104849209087331979041063119381848807866393334623547458679632313593165490090576560631591497375294577346918997626555275901699599046290248341534517493822979401924933529218800128213183622468768758778383490790897872207226774296157227513569046120309964135162156160880734035686797533655250067753123329934500427282796409292437839815567953104914195659498600885639554862191370409035152186176787905091363301580661820508597661989456754179428545699089289336010360432985301,
+            "strength": 1,
+            "encryption_type": "RSA",
+            "encryption_key": null,
+            "labels": [
+                "l",
+                "a",
+                "l",
+                "a",
+                "l",
+                "a"
+            ],
+            "updated_at": "2024-12-22 04:22:54",
+            "created_at": "2024-12-22 04:22:54",
+            "history": []
+        },
+        {
+            "id": 5,
+            "user_id": 1,
+            "website": "aaa",
+            "login": "aaa",
+            "password": "VJZChDhU3c566UFSzDumUQd8NAXOOYnAQzhQLrcOQvc=",
+            "strength": 1,
+            "encryption_type": "AES",
+            "encryption_key": "lblIcCG9E/EXMBZEcehe8A==",
+            "labels": [
+                "l",
+                "a",
+                "b",
+                "e",
+                "l",
+                "l",
+                "l"
+            ],
+            "updated_at": "2024-12-22 04:28:35",
+            "created_at": "2024-12-22 04:28:35",
+            "history": []
+        },
+        {
+            "id": 6,
+            "user_id": 1,
+            "website": "aaa",
+            "login": "aaa",
+            "password": "ELe7BgWPk3jcc9WV4tl/3wNCgdlBUyLeac4+7qtc3uY=",
+            "strength": 1,
+            "encryption_type": "AES",
+            "encryption_key": "hJBLfD/fB1Dpew9p3qeh7g==",
+            "labels": [
+                "l",
+                "a",
+                "b",
+                "e",
+                "l",
+                "l",
+                "l"
+            ],
+            "updated_at": "2024-12-22 04:29:29",
+            "created_at": "2024-12-22 04:29:29",
+            "history": []
+        },
+        {
+            "id": 7,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "hA8LtNUedfE7TWD4K9UYh5C62P90M71o26q/j9uL64IZE6yLCMOs4aaaoVU+0ngW",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "66x0hZmb6YN4Dbub99qqew==",
+            "labels": [
+                "important",
+                "panel",
+                "banque"
+            ],
+            "updated_at": "2024-12-22 13:14:25",
+            "created_at": "2024-12-22 13:14:25",
+            "history": []
+        },
+        {
+            "id": 9,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "pt6CLDnSebDKiWlk7AnGbz+HMBUsHMsBAi28DgyOzLxmMQSnApGYQsLAe+6wxSKK",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "XBfS0kYUoZIlgJx28fIbbQ==",
+            "labels": [
+                "important"
+            ],
+            "updated_at": "2024-12-22 13:14:34",
+            "created_at": "2024-12-22 13:14:34",
+            "history": []
+        }
+    ]
+}
