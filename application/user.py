@@ -1,14 +1,11 @@
-from application.main import Application
-from database.main import Database
-
 from utils import configuration
 from utils import methods
 
 
 class User:
-    def __init__(self, username: str, password: str, app: Application) -> None:
-        self.app: Application = app
-        self.database: Database = app.database
+    def __init__(self, username: str, password: str, app) -> None:
+        self.app = app
+        self.database = app.database
 
         self.username: str = username
         self.password: str = self.app.security.hasher.hash(password)

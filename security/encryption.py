@@ -1,15 +1,14 @@
 import base64
 
 from utils import configuration
-from security.main import Security
 
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from Crypto.Random import get_random_bytes
 
 class Encryption:
-    def __init__(self, instance: Security) -> None:
-        self.security: Security = instance
+    def __init__(self, instance) -> None:
+        self.security = instance
 
 
     def CESAR(self, pwd: str, increment: int | None = None) -> str:

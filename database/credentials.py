@@ -1,11 +1,10 @@
 from application.credentials import Credentials
-from database.main import Database
 from utils import methods
 
 
 class DataCredentials:
-    def __init__(self, database: Database) -> None:
-        self.database: Database = database
+    def __init__(self, database) -> None:
+        self.database = database
         self.user = self.database.app.user
         self.data: list[dict] = self.database.complete["credentials"]
         self.user_credentials: list[dict] = self.get_user_credentials(self.user.id)

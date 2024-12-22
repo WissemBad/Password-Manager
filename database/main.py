@@ -1,7 +1,6 @@
 import os
 import json
 
-from application.main import Application
 from utils import configuration, methods
 
 from database.user import DataUser
@@ -12,8 +11,8 @@ class Database:
     database_location: str = "database/_data/database.json"
     template: dict = configuration.template["database"]
 
-    def __init__(self, app: Application) -> None:
-        self.app: Application = app
+    def __init__(self, app) -> None:
+        self.app = app
         self.complete: dict = self.load()
 
         self.user: DataUser = DataUser(self)

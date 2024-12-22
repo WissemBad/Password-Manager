@@ -1,7 +1,6 @@
 import math
 import base64
 
-from application.main import Application
 from utils.methods import generate_prime
 
 from security.hash import Hasher
@@ -15,7 +14,7 @@ from Crypto.Cipher import AES
 
 class Security:
     def __init__(self, app):
-        self.app: Application = app
+        self.app = app
         self.manager = KeyManager()
 
         self.hasher = Hasher()

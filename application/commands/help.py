@@ -27,8 +27,8 @@ class HelpCommand:
                     ),
                     "edit": (
                         "Modifie les détails d'une entrée existante.",
-                        "credentials edit <id> [--website <url>] [--login <login>] [--password <password>] [--label <label>]",
-                        "credentials edit 123 --website example.com --login newuser --password newpass --label 'Personal'"
+                        "credentials edit <id> [--website <url>] [--login <login>] [--password <password>] [--label <label>] [--encryption_type <AES/RSA/CESAR>] [--cesar_key <key>]",
+                        "credentials edit 123 --website imt-atlantique.fr --login admin --password adminPass --label School"
                     ),
                     "remove": (
                         "Supprime une entrée spécifique.",
@@ -66,6 +66,7 @@ class HelpCommand:
 
         self.handle()
 
+
     def handle(self):
         """→ Gestion des commandes d'aide."""
         if self.arguments["subcommand"] is None: return self.global_help()
@@ -78,6 +79,7 @@ class HelpCommand:
         for command in self.global_commands:
             print( f"  → \033[100;1m{command[0]}\033[0m : \033[3m{command[1]}\033[0m\n    \033[4mUsage :\033[0m \033[100m{command[2]}\033[0m\n")
         return self.instance.command()
+
 
     def specific_help(self, main_command, sub_command=None):
         """→ Affiche l'aide spécifique."""
