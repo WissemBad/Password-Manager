@@ -149,7 +149,7 @@ def password_audit(password: str) -> None:
         for line in response.text.splitlines():
             hash_suffix, count = line.split(":")
             if hash_suffix == suffix:
-                return console("magenta", f"→ Votre mot de passe a été trouvé {int(count)} fois sur Internet !")
+                return console("cyan", f"→ Votre mot de passe a été trouvé \033[1m{int(count)} fois\033[0m\033[36m sur Internet !")
         return console("bright_green", "→ Votre mot de passe n'a pas été trouvé dans les bases de données connues.")
     except Exception as e:
         return console("red", f"[✘] Erreur : La vérification de votre mot de passe a échoué :\n→ {e}")

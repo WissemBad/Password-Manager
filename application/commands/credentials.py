@@ -1,3 +1,5 @@
+import time
+
 from utils import methods, ui
 
 from application.credentials import Credentials
@@ -22,6 +24,7 @@ class CredentialsCommand:
             case "show": self.show()
             case "list": self.list()
             case "audit": self.audit()
+            case "history": self.history()
             case "generate": self.generate()
             case _: self.instance.help("credentials")
 
@@ -35,11 +38,11 @@ class CredentialsCommand:
         missing_args = [arg for arg in required_args if arg not in self.arguments["args"].keys()]
         if missing_args: methods.console("bright_red", f"[✘] Erreur : Argument(s) manquant(s) : {', '.join(missing_args)}"); return self.instance.help("credentials", "add")
 
-        labels = self.arguments["args"].get("label", [])
+        labels = self.arguments["args"].get("labels", [])
         if not isinstance(labels, list): labels = [labels]
         labels = [label.lower() for label in labels] if labels else []
         encryption_key = None
-        try: encryption_key = int(self.arguments["args"].get("encryption_key")) if self.arguments["args"].get("encryption_key") else None
+        try: encryption_key = int(self.arguments["args"].get("cesar_key")) if self.arguments["args"].get("cesar_key") else None
         except ValueError: methods.console("yellow", "[ί] Attention : La clé de chiffrement doit être un nombre entier.\nUtilisation de la clé de chiffrement par défaut.")
 
         data = {
@@ -72,6 +75,7 @@ class CredentialsCommand:
         except (ValueError, IndexError):
             methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) ou incorrect : <id>")
             return self.instance.help("credentials", "remove")
+
 
         credential = Credentials(self.instance.app, id=id)
         if not credential.exists:
@@ -109,7 +113,7 @@ class CredentialsCommand:
             methods.console("bright_red", "[✘] Erreur : Vous ne pouvez pas modifier la clé de chiffrement sans modifier le type de chiffrement.")
             return self.instance.command()
 
-        labels = self.arguments["args"].get("label", None)
+        labels = self.arguments["args"].get("labels", None)
         if labels is not None:
             if not isinstance(labels, list): labels = [labels]
             labels = [label.lower() for label in labels] if labels else []
@@ -122,15 +126,18 @@ class CredentialsCommand:
             methods.console("bright_red", "[✘] Erreur : Vous n'êtes pas autorisé à modifier ce credentials.")
             return self.instance.command()
 
+        encryption_key = self.arguments["args"].get("encryption_key", None)
+
         data = {
             "website": self.arguments["args"].get("website", None),
             "login": self.arguments["args"].get("login", None),
             "password": self.arguments["args"].get("password", None),
             "encryption_type": self.arguments["args"].get("encryption_type", None),
-            "encryption_key": self.arguments["args"].get("encryption_key", None),
+            "encryption_key": None,
             "labels": labels
         }
 
+        if encryption_key is not None: data["encryption_key"] = int(encryption_key)
         if credential.update(**data): methods.console("green", "[✔] Succès : Votre credentials a été modifié avec succès.")
         else: methods.console("bright_red", "[✘] Erreur : Une erreur s'est produite lors de la modification de votre credential.")
         return self.instance.command()
@@ -139,26 +146,80 @@ class CredentialsCommand:
     def show(self) -> None:
         """
         → Logique associée à la commande 'show'.
-        :param args: Dictionnaire contenant les arguments pour afficher l'entrée.
         :return: Rien
         """
-        pass
+        keys = list(self.arguments["args"].keys()) or []
+        try: id = int(keys[0])
+        except (ValueError, IndexError):
+            methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) ou incorrect : <id>")
+            return self.instance.help("credentials", "remove")
 
+
+        credential = Credentials(self.instance.app, id=id)
+        if not credential.exists:
+            methods.console("bright_red", "[✘] Erreur : Aucun credentials trouvé pour l'ID fourni.")
+            return self.instance.command()
+        if not credential.user_id == self.instance.app.user.id:
+            methods.console("bright_red", "[✘] Erreur : Vous n'êtes pas autorisé à supprimer ce credentials.")
+            return self.instance.command()
+
+        crypt = not "decrypted" in keys
+        if credential.show(crypt): methods.console("green", "[✔] Succès : Détails du credentials affichés avec succès.")
+        else: methods.console("bright_red", "[✘] Erreur : Une erreur s'est produite lors de l'affichage des détails de votre credential.")
+        return self.instance.command()
 
     def list(self) -> None:
         """
         → Logique associée à la commande 'list'.
         :return: None
         """
-        pass
+        params = self.arguments["args"]
+        allowed_params = ["website", "login", "labels", "strength", "encryption_type"]  # Paramètres autorisés pour la recherche
+        user_credentials = self.instance.app.database.credentials.get_user_credentials(self.instance.app.user.id)
+        response = []
 
+        # Liste des paramètres non autorisés
+        invalid_params = [key for key in params.keys() if key not in allowed_params]
+
+        if invalid_params:
+            for param in invalid_params:
+                methods.console("yellow", f"[ί] Avertissement : Le paramètre '{param}' n'est pas supporté. Il sera ignoré.")
+            params = {key: value for key, value in params.items() if key in allowed_params}
+
+        # Affichage de la recherche avec critères
+        if params:
+            criteria_display = " | ".join([f"{key}={value}" for key, value in params.items()])
+            methods.console("blue", f"[ί] Note : Recherche avancée avec des critères : {criteria_display}")
+        else: methods.console("blue", "[ί] Note : Affichage de toutes les entrées...")
+        time.sleep(1.5)
+
+        for credential in user_credentials:
+            matches_labels = True
+            labels = self.arguments["args"].get("labels", None)
+
+            if labels is not None:
+                if not isinstance(labels, list):
+                    labels = [labels]
+                search_labels = [label.lower() for label in labels] if labels else []
+                matches_labels = all(label in credential.get("labels", []) for label in search_labels)
+            matches_criteria = all(credential.get(key) == value for key, value in params.items() if key != "labels")
+
+            if matches_criteria and matches_labels:
+                credential = Credentials(self.instance.app, credential["id"])
+                response.append(credential)
+
+        if response:
+            for cred in response: cred.list_show()
+            methods.console("green", f"[✔] Succès : {len(response)} résultat(s) trouvé(s).")
+        else: methods.console("bright_red", "[✘] Échec : Aucun résultat n'a été trouvé avec vos critères.")
+        return self.instance.command()
 
     def generate(self) -> None:
         """
         → Logique associée à la commande 'generate'.
         :return: None
         """
-        params = self.arguments["args"].keys()
+        params = list(self.arguments["args"].keys())
         length, strength = None, None
         try: strength = int(self.arguments["args"].get("strength")) if self.arguments["args"].get("strength") else 3
         except ValueError:  methods.console("yellow", "[ί] Attention : La force doit être comprise en 1 et 4. Utilisation de la force par défaut.")
@@ -184,6 +245,54 @@ class CredentialsCommand:
     def audit(self) -> None:
         """
         → Logique associée à la commande 'audit'.
-        :return: None
+        :return: Rien
         """
-        pass
+        keys = list(self.arguments["args"].keys()) or []
+        try: id = int(keys[0])
+        except (ValueError, IndexError):
+            methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) ou incorrect : <id>")
+            return self.instance.help("credentials", "audit")
+
+
+        credential = Credentials(self.instance.app, id=id)
+        if not credential.exists:
+            methods.console("bright_red", "[✘] Erreur : Aucun credentials trouvé pour l'ID fourni.")
+            return self.instance.command()
+        if not credential.user_id == self.instance.app.user.id:
+            methods.console("bright_red", "[✘] Erreur : Vous n'êtes pas autorisé à consulter ce credentials.")
+            return self.instance.command()
+
+        credential.audit(); return self.instance.command()
+
+    def history(self) -> None:
+        """
+        → Logique associée à la commande 'audit'.
+        :return: Rien
+        """
+        keys = list(self.arguments["args"].keys()) or []
+
+        try: id = int(keys[0])
+        except (ValueError, IndexError):
+            methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) ou incorrect : <id>")
+            return self.instance.help("credentials", "history")
+
+        try: ID = int(self.arguments["args"][keys[0]])
+        except (ValueError, IndexError):
+            methods.console("bright_red", f"[✘] Erreur : Éxécution incorrecte de la commande, argument(s) manquant(s) ou incorrect : <history_id>")
+            return self.instance.help("credentials", "history")
+
+        credential = Credentials(self.instance.app, id=id)
+        if not credential.exists:
+            methods.console("bright_red", "[✘] Erreur : Aucun credentials trouvé pour l'ID fourni.")
+            return self.instance.command()
+        if not credential.user_id == self.instance.app.user.id:
+            methods.console("bright_red", "[✘] Erreur : Vous n'êtes pas autorisé à consulter ce credentials.")
+            return self.instance.command()
+        try: exists = credential.history[ID]
+        except IndexError:
+            methods.console("bright_red", "[✘] Erreur : Aucun historique trouvé pour l'ID fourni.")
+            return self.instance.command()
+
+        crypt = not "decrypted" in keys
+        credential.show_history(ID, crypt)
+        return self.instance.command()
