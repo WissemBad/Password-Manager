@@ -23,12 +23,12 @@ class HelpCommand:
                     "add": (
                         "Ajoute une nouvelle entrée d'identifiants au gestionnaire.",
                         "credentials add --website <url> --login <login> --password <password> --encryption_type <AES/RSA/CESAR> [--cesar_key <key>] [--labels <labels>]",
-                        "credentials add --website example.com --login admin --password adminPass --encryption_type AES --label 'Important, Panel, Banque'"
+                        "credentials add --website example.com --login admin --password adminPass --encryption_type AES --labels 'Important, Panel, Banque'"
                     ),
                     "edit": (
                         "Modifie les détails d'une entrée existante.",
-                        "credentials edit <id> [--website <url>] [--login <login>] [--password <password>] [--label <label>] [--encryption_type <AES/RSA/CESAR>] [--cesar_key <key>]",
-                        "credentials edit 123 --website imt-atlantique.fr --login admin --password adminPass --label School"
+                        "credentials edit <id> [--website <url>] [--login <login>] [--password <password>] [--labels <labels>] [--encryption_type <AES/RSA/CESAR>] [--cesar_key <key>]",
+                        "credentials edit 123 --website imt-atlantique.fr --login admin --password adminPass --labels School"
                     ),
                     "remove": (
                         "Supprime une entrée spécifique.",
@@ -37,23 +37,23 @@ class HelpCommand:
                     ),
                     "show": (
                         "Affiche les détails d'une entrée spécifique.",
-                        "credentials show <id>",
-                        "credentials show 123"
+                        "credentials show <id> [--decrypted]",
+                        "credentials show 123 --decrypted"
                     ),
                     "list": (
                         "Liste toutes les entrées enregistrées, avec des options de filtre.",
-                        "credentials list [--label <label>] [--expired] [--strength <min_strength>]",
-                        "credentials list --label 'Work'"
+                        "credentials list [--website <website>] [--login <login>] [--labels <labels>] [--strength <1-4>] [--encryption_type <AES/RSA/CESAR>]",
+                        "credentials list --website imt-nord-europe.fr --labels 'Important, School'"
                     ),
                     "audit": (
-                        "Analyse les entrées pour détecter les failles de sécurité (faibles ou expirées).",
+                        "Analyse les entrées pour détecter les failles de sécurité.",
                         "credentials audit <id>",
                         "credentials audit 123"
                     ),
                     "history": (
                         "Affiche l'historique des modifications d'une entrée.",
-                        "credentials history <id>",
-                        "credentials history 123"
+                        "credentials history <id> <history_id> [--decrypted]",
+                        "credentials history 123 456 --decrypted"
                     ),
                     "generate": (
                         "Génère un mot de passe sécurisé pour une nouvelle entrée.",

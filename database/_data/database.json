@@ -31,126 +31,95 @@
         {
             "id": 1,
             "user_id": 1,
-            "website": "solve-community.fr",
-            "login": "Wissem_Bad",
-            "password": "jDQMkI0GHrqdChmVDu1PPfFmtmM72M+MAvw1gf4A+Li/ez5eoJIKfGjPpg4OXsMq",
+            "website": "example.com",
+            "login": "admin",
+            "password": "e5OVORd86KHgglY2/Q5qWOS3BhIXK82/etjitnar6orBqYL0lBaxMKoyq1BOnYTo",
             "strength": 2,
             "encryption_type": "AES",
-            "encryption_key": "/kOECDkkvoN+26SQQZbACg==",
+            "encryption_key": "D38E9PNTwGy4ojcnd//3hw==",
             "labels": [
-                "s",
-                "o",
-                "l",
-                "v",
-                "e"
+                "wissem"
             ],
-            "updated_at": "2024-12-22 04:15:30",
-            "created_at": "2024-12-22 04:15:30",
+            "updated_at": "2024-12-22 21:23:27",
+            "created_at": "2024-12-22 20:52:28",
             "history": []
         },
         {
             "id": 2,
             "user_id": 1,
-            "website": "solve-community.fr",
-            "login": "Wissem_Bad",
-            "password": "1QGqNfzgJKWa15mbDq1KWR/waAaPGkwg0G7tNdbttBVXlFqpxhXU7aDIZhOJy7Pp",
+            "website": "example.com",
+            "login": "admin",
+            "password": "+meFeqYUPOCqii3X3OYeAKW1oqrhR0rPRQc0W4Z29eir+jynAV1RG2VGRshy5DuQ",
             "strength": 2,
             "encryption_type": "AES",
-            "encryption_key": "pOHNCR4uQlp+3NJT448lOw==",
+            "encryption_key": "eQujufhvuqDPrcwUbYc43Q==",
             "labels": [
-                "s",
-                "o",
-                "l",
-                "v",
-                "e"
+                "important",
+                "panel",
+                "banque"
             ],
-            "updated_at": "2024-12-22 04:15:32",
-            "created_at": "2024-12-22 04:15:32",
+            "updated_at": "2024-12-22 20:52:30",
+            "created_at": "2024-12-22 20:52:30",
             "history": []
         },
         {
             "id": 3,
             "user_id": 1,
-            "website": "solve-community.fr",
-            "login": "Wissem_Bad",
-            "password": "XX4FPTg1uYwZnK54B+bAvlswbNXh6opBUjWK7jA96mopoa1cR2zZoATDfdDGTEE+",
+            "website": "example.com",
+            "login": "admin",
+            "password": "oK+DFZtr7YSYqj1ohHSn8C5mHKVcStXXZP6Wg6v9T8qzUIFv8zcCno94bhAqdPo4",
             "strength": 2,
             "encryption_type": "AES",
-            "encryption_key": "FoNHTo4+UG/yAq6bWgS5Lg==",
+            "encryption_key": "jCnqbF1/j9M4DKKJmMlYpQ==",
             "labels": [
-                "s",
-                "o",
-                "l",
-                "v",
-                "e"
+                "important",
+                "panel",
+                "banque"
             ],
-            "updated_at": "2024-12-22 04:15:32",
-            "created_at": "2024-12-22 04:15:32",
+            "updated_at": "2024-12-22 20:52:31",
+            "created_at": "2024-12-22 20:52:31",
             "history": []
         },
         {
             "id": 4,
             "user_id": 1,
-            "website": "aa",
-            "login": "aaa",
-            "password": 6444303057564709502811101965266875156840977885241817584967344602107312065457950442631320873989637826047242195815524954940490065843824418179151288867691636332104849209087331979041063119381848807866393334623547458679632313593165490090576560631591497375294577346918997626555275901699599046290248341534517493822979401924933529218800128213183622468768758778383490790897872207226774296157227513569046120309964135162156160880734035686797533655250067753123329934500427282796409292437839815567953104914195659498600885639554862191370409035152186176787905091363301580661820508597661989456754179428545699089289336010360432985301,
-            "strength": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": 1783686198832209812700499973819909855417565693391840612725079884019127182305114893168601461349440943652411567949130078267863605012130077172689326037272792264285657282220452923186003313873817372220492221527046584033063440857308254391258597553465168336637469099555034675869457340511704800114600451847485170242199195712088396155379857704185764793486078865220579377018747385574816259537383506323685919977139805295442401730296213538083427734217483848213160772419854426027380202635979804731327082183390962417964657704326251894497970993256602946386966958692127408581653597017921381104876144903913106592127298523100327892796,
+            "strength": 2,
             "encryption_type": "RSA",
             "encryption_key": null,
-            "labels": [
-                "l",
-                "a",
-                "l",
-                "a",
-                "l",
-                "a"
-            ],
-            "updated_at": "2024-12-22 04:22:54",
-            "created_at": "2024-12-22 04:22:54",
+            "labels": [],
+            "updated_at": "2024-12-22 20:53:03",
+            "created_at": "2024-12-22 20:53:03",
             "history": []
         },
         {
             "id": 5,
             "user_id": 1,
-            "website": "aaa",
-            "login": "aaa",
-            "password": "VJZChDhU3c566UFSzDumUQd8NAXOOYnAQzhQLrcOQvc=",
-            "strength": 1,
-            "encryption_type": "AES",
-            "encryption_key": "lblIcCG9E/EXMBZEcehe8A==",
-            "labels": [
-                "l",
-                "a",
-                "b",
-                "e",
-                "l",
-                "l",
-                "l"
-            ],
-            "updated_at": "2024-12-22 04:28:35",
-            "created_at": "2024-12-22 04:28:35",
+            "website": "example.com",
+            "login": "admin",
+            "password": 1783686198832209812700499973819909855417565693391840612725079884019127182305114893168601461349440943652411567949130078267863605012130077172689326037272792264285657282220452923186003313873817372220492221527046584033063440857308254391258597553465168336637469099555034675869457340511704800114600451847485170242199195712088396155379857704185764793486078865220579377018747385574816259537383506323685919977139805295442401730296213538083427734217483848213160772419854426027380202635979804731327082183390962417964657704326251894497970993256602946386966958692127408581653597017921381104876144903913106592127298523100327892796,
+            "strength": 2,
+            "encryption_type": "RSA",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:53:03",
+            "created_at": "2024-12-22 20:53:03",
             "history": []
         },
         {
             "id": 6,
             "user_id": 1,
-            "website": "aaa",
-            "login": "aaa",
-            "password": "ELe7BgWPk3jcc9WV4tl/3wNCgdlBUyLeac4+7qtc3uY=",
-            "strength": 1,
-            "encryption_type": "AES",
-            "encryption_key": "hJBLfD/fB1Dpew9p3qeh7g==",
-            "labels": [
-                "l",
-                "a",
-                "b",
-                "e",
-                "l",
-                "l",
-                "l"
-            ],
-            "updated_at": "2024-12-22 04:29:29",
-            "created_at": "2024-12-22 04:29:29",
+            "website": "example.com",
+            "login": "admin",
+            "password": 1783686198832209812700499973819909855417565693391840612725079884019127182305114893168601461349440943652411567949130078267863605012130077172689326037272792264285657282220452923186003313873817372220492221527046584033063440857308254391258597553465168336637469099555034675869457340511704800114600451847485170242199195712088396155379857704185764793486078865220579377018747385574816259537383506323685919977139805295442401730296213538083427734217483848213160772419854426027380202635979804731327082183390962417964657704326251894497970993256602946386966958692127408581653597017921381104876144903913106592127298523100327892796,
+            "strength": 2,
+            "encryption_type": "RSA",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:53:04",
+            "created_at": "2024-12-22 20:53:04",
             "history": []
         },
         {
@@ -158,17 +127,27 @@
             "user_id": 1,
             "website": "example.com",
             "login": "admin",
-            "password": "hA8LtNUedfE7TWD4K9UYh5C62P90M71o26q/j9uL64IZE6yLCMOs4aaaoVU+0ngW",
+            "password": "orawbDogg",
             "strength": 2,
-            "encryption_type": "AES",
-            "encryption_key": "66x0hZmb6YN4Dbub99qqew==",
-            "labels": [
-                "important",
-                "panel",
-                "banque"
-            ],
-            "updated_at": "2024-12-22 13:14:25",
-            "created_at": "2024-12-22 13:14:25",
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:53:07",
+            "created_at": "2024-12-22 20:53:07",
+            "history": []
+        },
+        {
+            "id": 8,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "orawbDogg",
+            "strength": 2,
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:53:08",
+            "created_at": "2024-12-22 20:53:08",
             "history": []
         },
         {
@@ -176,15 +155,267 @@
             "user_id": 1,
             "website": "example.com",
             "login": "admin",
-            "password": "pt6CLDnSebDKiWlk7AnGbz+HMBUsHMsBAi28DgyOzLxmMQSnApGYQsLAe+6wxSKK",
+            "password": "orawbDogg",
+            "strength": 2,
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:53:08",
+            "created_at": "2024-12-22 20:53:08",
+            "history": []
+        },
+        {
+            "id": 10,
+            "user_id": 1,
+            "website": "prout.fr",
+            "login": "admin",
+            "password": "knwsxZkcc",
+            "strength": 2,
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:59:27",
+            "created_at": "2024-12-22 20:53:17",
+            "history": [
+                {
+                    "website": "example.com",
+                    "login": "admin",
+                    "password": "knwsxZkcc",
+                    "strength": 2,
+                    "encryption_type": "CESAR",
+                    "encryption_key": "5kteMLBT3m+VTa2KdZ50Hnx2InshQy+d/WrEytkvPhrm4lj3Qwkv3V3CErQixAwi345g6yxN/n2AbvIotuCakiGCKYTE+ieRnW1be2OLND1YKfPf5C3pn7P7by6cwUxjmr2D0QyRdcNnDHDEC11aAKmGnCwnyfxRDRkfjf5EBPSIkmJkOXOlg0y8axGzx84/Vo+tRBKeue3Uv4TaZbbGAtFhGlMz1tX8Zh6XQDZSkaKxKgDHYlhmgX6Es23RPSWWcpQyF9bIy48+dzHZkwViAR1/kh49U5pMC+8C0xiUDNCg/wh3842yeSzUnznNJU5wOJ2iuyT9iDlK5k90JekT4JH+1jFrCCjayeqGs9YQjTxvbZUouiquYjVE0/dnxK1PWHorlp2Qd+8eq/3oWUTRo0HrFQC1MBgCFSIO2DVJXCn4hF7VxTExiKo7vKHxJLrznEhvVIv08H2QST/dNR/c7zrEMCjbFO5T1tAsvXUkWLeqIfIl7R++I/2kgHek6i88PfiWfS6tvAgdldANQS+w++s7k+aTsjT6DyNHEbvmWXg9ipZ9MIqm61gsFApJ6yZQf7xguyYLPoAya8Z6uC1rhFegpH7jxhRfBucNx/hGbAf8T+WHdgYNd9kNmedJQAA0vDXvUTn8M3XxnGDK4cpsfZ0kLciAfxvnWHpLmPJQam/YkgORLJQ+a+MTbIFakMwYIDcVeFvG6Mukmzm8UFdX9EFjBqZZzwGRRZ9AioLp0t63pj/XxabGcVvWuKxEohUDpSPdcRlYM9r9Q3cnyJO2q6YomPemj4s1TfWOz7bd3u0qXe2/+o4NdzFACVoW0SEdqjDs8/JhWgo9BliEjUxOs8xx+P/dIZMsq8JGNieMkmIwb1nEOb6RJaSP82WrZBjbZxzh35MihAhU9/ydBZDr+zJ3Wh+vM9HxqCra60lr1kxzI03m9rk8gEk1Q7xcd9LN8YsI0M8ShuCQUDzgkEEBywn7vm8kgQl2wMk8nGFtDA8coGlP4VuoWB5LtIi8ci+PsMIOQ7tZXz5Zh+Dfz4OQazEbrlMTnlBwvr9qxo0BwfiJ2eMLfPtVt43QeIQ8PamgVupZB3YQht/5iAzQeLM86fTUEPFQr/xWJt9oq4Ib2e7p5GGJ+lfCZAP12LcpWbQnV9ef/QkHE7CItDe3ywtsujKm9bnRuZFKjgibi+hlWVw02Eju7pwHI/Rb9cSirico8fzxTUb80CfY/pc+lwQGsXWDOjmPgGGuBjOdj+AzdpDSz4+iOZXCX2WJQHldiEBzm89Hre4zLZHnz9xQgkjWqDv0RncEN6YhcBIrcGijE8ht03/4RksIDUBCaS2Pw3h3TJwArE5u1NHk4wrhE5sASK04SNwNTBiigGrRScFKxG4=",
+                    "updated_at": "2024-12-22 20:53:17"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "user_id": 1,
+            "website": "prout.fr",
+            "login": "admin",
+            "password": "Dfcih(tf",
+            "strength": 3,
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 20:58:12",
+            "created_at": "2024-12-22 20:53:17",
+            "history": [
+                {
+                    "website": "prout.fr",
+                    "login": "admin",
+                    "password": "knwsxZkcc",
+                    "strength": 2,
+                    "encryption_type": "CESAR",
+                    "encryption_key": null,
+                    "updated_at": "2024-12-22 20:58:02"
+                },
+                {
+                    "website": "example.com",
+                    "login": "admin",
+                    "password": "knwsxZkcc",
+                    "strength": 2,
+                    "encryption_type": "CESAR",
+                    "encryption_key": "BIsdiNICOZ8b5pKj7bFnxBOUWkKIn2cRgYPosneJjiMBToCvgKb7mgjAfTD37aEHPMmBDQ1NRtQE38x0KixMhBmP0LYHU/Ad/QUacSFpujAKZ3Qgem7Dy+NcZUgoL55r7rG2DLDf3LezmRO1zAaR8jeAcWWtVveBQlYSMjh8lg5lex1v2E6pxGDrAcg6arSvaR/HNX+O4jlbePOROpAwlrSB0LXsZq7J6NNPODBjmUHUYNzrh3w1DHYxDOkqrUdrhDbpx0OUMl7DaYqSNjqITaq3LFp6GM/BXh32YMMMYHZCK9BW4BCH93LEmro0xhQTIwypggJMKRqkd/nt1vXk4I+nUSc4omsCiM9ZU12hiSkREOs+C84rYc5wkcheAs8VhIS+oLBBumyYIvyTdAyFQ/kWcvAyGYx2HYa5CIhX0SvNs8MWS1Phyn5dBdoxh4K2oY1cVAE/mQ92KywwExvrDVRoV8g6iUnOXMIJKQRx69CVDY6aAu+Yv6x8PxqhG8fJfHFW3LXgTUzRSSCIv3Wp/ZcRe1/SnhiupETuK4MNxFfwyobUq1zi3phaYhNXj3H5pZCu2tpMbjs20iUsaW/MaVGB2tIbTi8E5xDSp2C3C5ME6WGC/hd1JNmAKQn+ps40AfGfQDGLwbHB/8wxUk+miLEbUUkmm2AkPZXcJLA824dccxsMDYwKtsrWGtT/CQs8fF+wJJHZkAtrzENF9MG1ClAR16hRPnNjTpl7yKhEdIflR/zxuy2vV9nom7Qs1s9FTFYTBmHlg0oRD0CetjmH7v6AQU8CjkEsJoV10HgL+7F/a3l35HTjDiZgWxN37/lDCev+2U9jRiIrmwj7k0hBt7UpclNQZQh1SMs5/iAv2p0Fyd6dTw5Ne3OwPeBaDUXwN5P57w6BtsiaVeQ1ElP/kP9MlZpYrNQencwUA2z1qJREYAXXvbT3cKAH+Sq5a8m1Y1pJnLXcpocgoBIVHFDIZoNiEAQ2Jk9EYxK4kTzbRDEeR5KN0haVbFdLkeRTMSYCLbBWnSAGopA/iXyOhRaU5RaqtipUCrqZUDqR3KUUCJlGLvN7e3+R13WB01XAUgWx1SJqh16U+EAZA2jGbfqhqycR/mAqeqxg1Kc+4uu6yIlTyrv9thxbJdJRprPJLNNIbSA48HMgcPPGmj5bb1ll6H/Tgoz80sCvMDKgAuk+LNAGXa9X0BV6keowylo+3ldIkfuLsvIHiCfmlX92yNkii+w99XAIT26W/1Gwjy33KBlFX3Pq2IzBAZqbCIl3D6IKc08asdFjqyc0e7HdELJy+1znMTwsCrXUIys8I0UMOXWqCYVipkpXhKJXJmu8Ns6li+RGFrY7+DJwrcHjCb2WrbaaAkmICd5Zq9STpxiVoDo=",
+                    "updated_at": "2024-12-22 20:53:17"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "user_id": 1,
+            "website": "prout",
+            "login": "admin",
+            "password": "knwsxZkcc",
+            "strength": 2,
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 21:01:22",
+            "created_at": "2024-12-22 20:53:18",
+            "history": [
+                {
+                    "website": "example.com",
+                    "login": "admin",
+                    "password": "knwsxZkcc",
+                    "strength": 2,
+                    "encryption_type": "CESAR",
+                    "encryption_key": "6H/anvUW2I7t8IlZBx12wGPyCCwCAQouCYAoN6/UT5ycRbHq0shC5Uc0UlzJ8tmtcgHyMpaCcqnSSio9oAYK3v8pJ7ZYmKl+3uhoIRXsKj8hd4ckv+/DyOy+/4L/YGOkr8kMNkrBX5smwFx7z7qeiRVLPhba5n9HY94+Qz65sNjQl3MFEK1N0t6PQxmUO1N5/ok7khkieHHJFdbJZWD9LiMiNBl6lvMBq+Z2TmbDlDHokMW/AulnQyb1+egUQrbKUfOGW0/Z1Hd0JiCBi/BmmwZAGkaUQ7Sg4spJ5YR3kMge4QFiJ/svGsxPAp3CIMUsJZViHs6gQsCuNhYwxcQ69S125lmO9k5Ps2qm2jaiMHUC+rAwOBvGwvBAq9O0iEM8mIDTm2Pjj7EoH321kl5z3/kPD2cHPQBvsJze88AoscZ8YTw6YuaGidEdtqozDODzz8ukPjsJkCQJqzAV3z672XhxfcX94GCPYBnwj0MU0QCJu3AV4yNCzP1uWRc982J8XkjpAS12oNttNuxJUnQINI3kZianIGccPjMlN/kzZBlaaURUK0DOKCFoTwO+eR3RyiQaeJtnp7J751kJS+8GRpXF586MawZbLqxJSoGXbAiuNeyDUrIARchM0BWaboju7awqOBB5QaRmwURLLw84WYMRGDL/a+nMFSdFZKlhwz/d52+87bAJcyouxstwyVxE94iGx7IWFzfe9EkgbH+ndIHXoiuyVQ8KTBixATS11FPazjs5ItN0Qiw/+1mWB3pQVFJONYY9n3Ew3mJ+xzcUX+YAGhl0X+n+3gm0nteH/DUDeIwnPKkcG+5hUuXhhOIYAqe5unBw5ZrUZLJtcjisQvh/VqLo36IPUxp3b4Lz+ctaOnxRume49KDU/UBsFKxSl4hnjwGBhsjASFTsHuVY4tQtUHm6S7CKdJHwIZJeUcQn22STkq72kLcTUUfH3vLvwpOM9jIDa6/iR/pa98VVamj+9i/WatrXWpvZHbQVtzc0m+6d3AGJja5iuthlEBaRzLXZZC5ZSays91Q9HsgbxvaTmx2c9Ii7Mhg73nR+tjHnVWBPZP94OoMAYMbP1L5BIbqypwTdSXoB1ugozYUWCJppLcDKR5O5OVVfX8r3tVWSohKJ3ga+I420kCtrFaxmHf9wS6AcRGG1cnWNNqxKldN3aAI7+r0gEYTEEFRNs0QDIYSdILuEwPyQzNaYWC3lkfH1Emdgot/TH7rAbLdURR+PZaJ3DPWS7Lp/3sE3vH0BIbdn0le+1rVJrAEN+qbdLtcCwffOJrBgd+K85SYPoVNI0utRwZp2SUc9l71QAoK4zv+WA0NyzT++FgVl+YxKPlFAosit44yqtSccSI1wrUdiv7urOOjBbzs5TR8bAys=",
+                    "updated_at": "2024-12-22 20:53:18"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "user_id": 1,
+            "website": "example",
+            "login": "example",
+            "password": "Kwggsa64",
+            "strength": 3,
+            "encryption_type": "CESAR",
+            "encryption_key": null,
+            "labels": [],
+            "updated_at": "2024-12-22 21:04:15",
+            "created_at": "2024-12-22 21:03:05",
+            "history": [
+                {
+                    "website": "example",
+                    "login": "example",
+                    "password": "ohkwzvo",
+                    "strength": 1,
+                    "encryption_type": "CESAR",
+                    "encryption_key": "EFjuOt5sHxwWWoDyh488zB3160wuhiBqlOsTkWBUZJypkBhnPT7/SJATwFnhZYS5izHIiIC1NyUDvbh8yZY5LImMP7cMlNUIwL22nJLPmjALLZcFMK68TV8c0m2zYGFDavB6HhMza4MpXwOJhUbp4hkKtF/MOHXzlcStgRQz2lZTCIwIlxAwHWmrZ0VpAD0DfDNkWC6trmg4nUZreQmYlzzv7st5J23MstUPmY8Onfb7483JT6Ld1FGtrMOjYaG91bAYz2AD+lTeQfGilq5cgxX7/ucV0kSJWIjDwOeU/ASSunt1mbTi1n5K19nAP7oxVe0ZugRGcRdjDjog9/wnz/q5QP/8kU3Kulr0sRSVlU8kLt79cO9e+zp7X9v1Sev+B4Tis1Xr10/hOEbPb0eMTIBwMVsJgys4FaodVrZq9mrUKw/Cy//kYsp6wrGJ8Qtxmy+e63xw6Hu3UhcP/7CndBP77a8gjmKxe5Bb4XaGYahD5lc+c3yo6ezMR7i6zsW1gX5h0jYIUcRZ+o1lqm/Lv6UQW9iUL8KFHxofgoW+eLyLI/ydzNqeviOFlr88A4G2c9EEo/fGmLvIZ2rnLpR+Xjm9Cosaiga5iNId70eVdq83OGKo0so+7F8ABOoqq4nrM1ekr5cQnQP3ZMoW6xl4c2dS11Uvyjs3j8W1T02MBrUGN+NIPQILPdHPz3ccQYGNTQCghbfEL7SEyS5lDckfRBLC5IWQ50RTO5fhtsc9z0aPISZ1e2P+T+FGFeFshmAi4we6rxPvyfhtYEljTfyoutoV/WJoaCFirK1CVnXwTi2ODFb4p6npL2vIlvzLwcSPafaInIKvy7S+D/TZJ/g2ZYir64MZkZ2gzF25PFIm9km9XRl0EEahLXd9Lb7BFyS7BYX1UREXb540rOyR0sPupNtqKYUDswuXGuymLFSt3m7wnTIfd2EmWD1hI8HJ3cukEEL+wT+lrZcRy/RzQINbLFfKopfb7Xl6ChB/kLgqvB/GnQBzx/BYrFklGSWy883OFCxOlESJ3moGnRLfe7JcjySAz7+amCDQwVAvDBqoKpBUb2Q4Xe5/Y5KRRFXak1+ZjJwcJVwaw1gTn/KX79IXxGP+z7Tj4fK+MhQh5skVolzXNVB759CkDtBr8lBbTYI7gP2DZ5FP5D6WDZoz9MfZ9zKFr8BfvSDBidQZWqYblVoB+W0dkA3jmtEDWChPfAGKlvl/y51gaEibTkzMNSdZWV5ZoSlyXvtsndST0sk1V7cokw6ZRbuxQ2CU1EZYHNxwpe2r5E7ttRHRAfEy0yoBV2qxmN2TlC1uEfGCaoYvb5xhYMIIaXcsuXw3T1h6Q3oBKw4Nj1mep6NNqsyOTEr+xbhTtmhjw4jOBbkuuHNSRXE=",
+                    "updated_at": "2024-12-22 21:03:05"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "uVTqRqGSgZIf6oTq0R3ITxaD26R2pfPwm/wrcmTy2B7FE5R+OGLQxJueoxKFP+g5",
             "strength": 2,
             "encryption_type": "AES",
-            "encryption_key": "XBfS0kYUoZIlgJx28fIbbQ==",
+            "encryption_key": "SnyXdkHeNjjUbWIZZFIGpA==",
+            "labels": [
+                "important",
+                "panel"
+            ],
+            "updated_at": "2024-12-22 21:29:58",
+            "created_at": "2024-12-22 21:29:58",
+            "history": []
+        },
+        {
+            "id": 15,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "B12nKQFdaOxdwuGMblNZkZd6a/fCcqZjex+HlZwfLZyGUIfgg98Yz2+AHhLRaDBD",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "4Wv5Cu8xa4j98bCFD6jolA==",
+            "labels": [
+                "important",
+                "panel",
+                "banque"
+            ],
+            "updated_at": "2024-12-22 21:30:00",
+            "created_at": "2024-12-22 21:30:00",
+            "history": []
+        },
+        {
+            "id": 16,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "HXlT+ynyqMKnNxpm9Q/BPywun58B7QCrfyqkZ23fEZlaOXxODIt7oRGzsshkzFwA",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "rB/qID32/pXnn00C2ko5OA==",
+            "labels": [
+                "important",
+                "",
+                "banque"
+            ],
+            "updated_at": "2024-12-22 21:30:05",
+            "created_at": "2024-12-22 21:30:05",
+            "history": []
+        },
+        {
+            "id": 17,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "yCY0le2/iunRjsM4CRF/bDonn+xUWQzO9bzaX/HMbQyNVoh+vbxTWLvIa1nvHrU5",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "sObhpiRjllPB+5NnuBYw4A==",
             "labels": [
                 "important"
             ],
-            "updated_at": "2024-12-22 13:14:34",
-            "created_at": "2024-12-22 13:14:34",
+            "updated_at": "2024-12-22 21:30:14",
+            "created_at": "2024-12-22 21:30:14",
+            "history": []
+        },
+        {
+            "id": 18,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "admin",
+            "password": "TUuJpat9pBgp45okmWErSgWEK7NXdXI1FLw8JT8WWQu18+e18pO5R1t5bVV0YmkM",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "+PI8jtYozjvaO/SoZl00dw==",
+            "labels": [
+                "important"
+            ],
+            "updated_at": "2024-12-22 21:30:15",
+            "created_at": "2024-12-22 21:30:15",
+            "history": []
+        },
+        {
+            "id": 19,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "caca",
+            "password": "tScMsby5ciNZ00ZUh5+vo/nWTvT4of/GBkK9DwQTSikyxrqhFjt0iyiaWhbW8yaP",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "8Uc8R4l0PRP55JPNE0bA9w==",
+            "labels": [
+                "important"
+            ],
+            "updated_at": "2024-12-22 21:30:23",
+            "created_at": "2024-12-22 21:30:23",
+            "history": []
+        },
+        {
+            "id": 20,
+            "user_id": 1,
+            "website": "example.com",
+            "login": "caca",
+            "password": "gHJbFsiAHBDp4YXnB7q6aM06QAooBcS+WKsuTmGc+prH01+VQZPRev58e02MqwXd",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "V0qP47liAEzpGBP13VMPKQ==",
+            "labels": [
+                "important"
+            ],
+            "updated_at": "2024-12-22 21:30:25",
+            "created_at": "2024-12-22 21:30:25",
+            "history": []
+        },
+        {
+            "id": 21,
+            "user_id": 1,
+            "website": "example.fr",
+            "login": "caca",
+            "password": "o71xBAEg6F5MS1erduOprd3TezKzAF006m4TGsRAYYEe8gYd7GkqYFjy1Mv8JPcG",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "F6v3FwkNzjw8jCNchybMQQ==",
+            "labels": [
+                "important"
+            ],
+            "updated_at": "2024-12-22 21:30:33",
+            "created_at": "2024-12-22 21:30:33",
+            "history": []
+        },
+        {
+            "id": 22,
+            "user_id": 1,
+            "website": "example.fr",
+            "login": "caca",
+            "password": "L2Tov9lAxQC0iOiaYcfMrHbEA4QHhdK+tQc+KQmzWr1T176sFWvoYThYcOJKyXie",
+            "strength": 2,
+            "encryption_type": "AES",
+            "encryption_key": "putF4fX1LEL5xljgcKUbKw==",
+            "labels": [
+                "important"
+            ],
+            "updated_at": "2024-12-22 21:30:33",
+            "created_at": "2024-12-22 21:30:33",
             "history": []
         }
     ]

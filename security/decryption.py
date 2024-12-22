@@ -11,15 +11,25 @@ class Decryption:
         self.security = instance
 
 
-    def CESAR(self, pwd: str, increment: int | None = None) -> str:
+    def CESAR(self, pwd: str, incr: int | None = None) -> str:
         """
         → Déchiffrer avec la méthode de César.
         :param pwd: Le mot de passe ou texte à déchiffrer.
-        :param increment: Le nombre de positions à décaler pour chaque caractère (par défaut, utilise la clé de César de l'instance).
+        :param incr: Le nombre de positions à décaler pour chaque caractère (par défaut, utilise la clé de César de l'instance).
         :return: Le texte déchiffré.
         """
+        if not isinstance(pwd, str):
+            raise TypeError(f"Le mot de passe attendu est une chaîne, reçu : {type(pwd)}")
+        if not isinstance(incr, (int, type(None))):
+            raise TypeError(f"L'incrément attendu est un entier ou None, reçu : {type(incr)}")
+
+        if not all(isinstance(configuration.characters[key], (list, str)) for key in
+                   ["alphabet", "ALPHABET", "special", "numbers"]):
+            raise ValueError("Les ensembles de caractères dans configuration.characters ne sont pas valides.")
+
         response = ""
-        if increment is None: increment = self.security.manager.csr_key_load()
+        if incr is None: increment = self.security.manager.csr_key_load()
+        else: increment = incr
 
         for char in pwd:
             if char in configuration.characters["alphabet"]:
@@ -32,8 +42,8 @@ class Decryption:
                 index = (configuration.characters["special"].index(char) - increment) % len(configuration.characters["special"])
                 char = configuration.characters["special"][index]
             elif char in configuration.characters["numbers"]:
-                index = (configuration.characters["special"].index(char) - increment) % len(configuration.characters["numbers"])
-                char = configuration.characters["special"][index]
+                index = (configuration.characters["numbers"].index(char) - increment) % len(configuration.characters["numbers"])
+                char = configuration.characters["numbers"][index]
             response += str(char)
         return response
 
