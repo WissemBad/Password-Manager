@@ -9,7 +9,7 @@ database_mode = 0
 # → Paramètres de sécurité
 security = {
     "aes_master_key_size": 256,     # Taille de la clé AES maître (en bits)
-    "rsa_master_key_size": 8192,    # Taille de la clé RSA maître (en bits)
+    "rsa_master_key_size": 4096,    # Taille de la clé RSA maître (en bits)
 
     "aes_standard_key_size": 256,   # Taille de la clé AES standard (en bits)
     "rsa_standard_key_size": 2048   # Taille de la clé RSA standard (en bits)
