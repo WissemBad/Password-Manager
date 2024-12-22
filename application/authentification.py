@@ -1,6 +1,5 @@
 import time
 
-from application.main import Application
 from application.user import User
 from database.main import Database
 
@@ -9,8 +8,8 @@ from utils import methods
 
 
 class Authentification:
-    def __init__(self, app: Application) -> None:
-        self.app: Application = app
+    def __init__(self, app) -> None:
+        self.app = app
         self.database: Database = self.app.database
 
 
@@ -73,7 +72,7 @@ class Authentification:
             time.sleep(1.5)
             return self.register(repeat) if not repeat else self.choice()
 
-        if password != confirm:
+        if not confirm:
             methods.console("bright_red", "[✘] Erreur : Les mots de passe ne correspondent pas.")
             time.sleep(1.5)
             return self.register(repeat) if not repeat else self.choice()

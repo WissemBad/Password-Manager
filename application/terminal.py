@@ -4,7 +4,6 @@ import shlex
 from application.commands.credentials import CredentialsCommand
 from application.commands.help import HelpCommand
 
-from application.main import Application
 from application.main import User
 from database.main import Database
 
@@ -16,8 +15,8 @@ class Terminal:
     commands_directory: str = "./application/commands"
     commands: list[str] = ["exit", "quit", "clear", "help", "credentials"]
 
-    def __init__(self, app: Application) -> None:
-        self.app: Application = app
+    def __init__(self, app) -> None:
+        self.app = app
         self.user: User = self.app.user
         self.database: Database = self.app.database
 

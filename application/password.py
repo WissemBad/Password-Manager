@@ -1,15 +1,13 @@
 import base64
 import random
 
-from application.main import Application
-
 from utils import methods
 from utils import configuration
 
 
 class Password:
-    def __init__(self, crypt: bool, password: str, encryption_type: str, app: Application, encryption_key: str = None) -> None:
-        self.app: Application = app
+    def __init__(self, crypt: bool, password: str, encryption_type: str, app, encryption_key: str = None) -> None:
+        self.app = app
 
         if crypt:
             self.encryption_type: str = encryption_type

@@ -3,7 +3,7 @@
 # ================================
 
 # → Mode de base de données
-#    0: JSON | 1: SQLITE
+#    0: JSON | 1: SQLITE — SQLite non implémenté
 database_mode = 0
 
 # → Paramètres de sécurité
@@ -99,7 +99,6 @@ template = {
     "database": {
         "utilisateur": [],  # Liste des utilisateurs
         "credentials": [],  # Liste des identifiants
-        "label": []         # Liste des labels
     },
 
     # → Exemple d'utilisateur
@@ -121,7 +120,10 @@ template = {
         "strength": 4,  # Note de robustesse
         "is_expired": False,    # Expiration (Historique)
         "encryption_type": "",  # AES, RSA, CESAR
-        "encryption_key": "",    # AES: Salt
-        "labels": []            # Références vers les labels
+        "encryption_key": "",    # AES: Salt | CESAR: Key
+        "labels": []  ,          # Références vers les labels
+        "updated_at": "2021-01-01 00:00:00",
+        "created_at": "2021-01-01 00:00:00",
+        "history": []           # Historique des mots de passe
     },
 }

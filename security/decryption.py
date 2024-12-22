@@ -1,6 +1,5 @@
 import base64
 
-from security.main import Security
 from utils import configuration
 
 from Crypto.Util.Padding import unpad
@@ -8,8 +7,8 @@ from Crypto.Cipher import AES
 
 
 class Decryption:
-    def __init__(self, instance: Security) -> None:
-        self.security: Security = instance
+    def __init__(self, instance) -> None:
+        self.security = instance
 
 
     def CESAR(self, pwd: str, increment: int | None = None) -> str:

@@ -1,9 +1,8 @@
 from application.user import User
-from database.main import Database
 
 class DataUser:
-    def __init__(self, database: Database) -> None:
-        self.database:Database = database
+    def __init__(self, database) -> None:
+        self.database = database
         self.data: list[dict] = self.database.complete["utilisateur"]
 
 

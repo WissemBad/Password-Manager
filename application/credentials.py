@@ -1,15 +1,13 @@
 from typing import Optional
 
-from application.main import Application
 from application.password import Password
 from application.user import User
-from database.main import Database
 
 
 class Credentials:
-    def __init__(self, app: Application, id: int, website: Optional[str] = None, login: Optional[str] = None, password: Optional[str] = None, encryption_type: Optional[str] = None, encryption_key: Optional[str] = None, labels: Optional[list] = None):
-        self.app:Application = app
-        self.database: Database = self.app.database
+    def __init__(self, app, id: int, website: Optional[str] = None, login: Optional[str] = None, password: Optional[str] = None, encryption_type: Optional[str] = None, encryption_key: Optional[str] = None, labels: Optional[list] = None):
+        self.app = app
+        self.database = self.app.database
         self.user: User = self.app.user
 
         self.id: int = id
