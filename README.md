@@ -6,7 +6,7 @@ Ce projet est un **gestionnaire de mots de passe** conçu pour gérer les identi
 
 Le système permet également de catégoriser les mots de passe en utilisant des **labels** et de les rechercher efficacement via des critères multiples (login, label, mot de passe).
 
--> __All credits to Wissem Badraoui *& Chat-GPT (un peu)*.__
+-> __All credits to Wissem.__
 
 
 ---
